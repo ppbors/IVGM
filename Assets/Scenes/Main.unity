@@ -314,26 +314,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183215037}
   m_CullTransparentMesh: 0
---- !u!1 &230802209 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 185370, guid: a3e9bd2d875ca52428801bc00f70c240,
+--- !u!114 &230802211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 230802211, guid: a3e9bd2d875ca52428801bc00f70c240,
     type: 3}
   m_PrefabInstance: {fileID: 927049363}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &230802211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 230802209}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dbe40d116a859a49a459002ab3bc739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 230802209}
-  exhaust: {fileID: 819459884}
 --- !u!1 &293576867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,12 +1059,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &819459884 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19828128, guid: a3e9bd2d875ca52428801bc00f70c240,
-    type: 3}
-  m_PrefabInstance: {fileID: 927049363}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &927049363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1083,6 +1069,10 @@ PrefabInstance:
     - target: {fileID: 185370, guid: a3e9bd2d875ca52428801bc00f70c240, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 19828128, guid: a3e9bd2d875ca52428801bc00f70c240, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 434884, guid: a3e9bd2d875ca52428801bc00f70c240, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1967,6 +1957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuCanvas: {fileID: 13479503}
   GameCanvas: {fileID: 1913817989}
+  Player: {fileID: 230802211}
 --- !u!4 &1877723837
 Transform:
   m_ObjectHideFlags: 0

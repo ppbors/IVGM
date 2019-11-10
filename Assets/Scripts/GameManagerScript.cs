@@ -9,7 +9,7 @@ public class GameManagerScript : MonoBehaviour
     public Canvas MenuCanvas;
     public Canvas GameCanvas;
 
-    public PlayerController player;
+    public PlayerController Player;
 
     private bool menuShown;//If menu is shown
     private bool gameRunning;//If game has started
@@ -23,8 +23,7 @@ public class GameManagerScript : MonoBehaviour
         //Init game var values here ...
 
         // Initialize the player object: start thrusters
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
-        player.ThrusterPlay(true);
+        Player.ThrusterPlay(true);
 
         gameRunning = true;
         //Debug.Log("GAME STARTED");
@@ -43,6 +42,8 @@ public class GameManagerScript : MonoBehaviour
     //Enable/disable menu rendering
     private void showMenu(bool Enabled)
     {
+        Player.gameObject.SetActive(!Enabled);
+
         MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gameRunning ? "Continue" : "Start";
         MenuCanvas.gameObject.SetActive(Enabled);
         menuShown = Enabled;

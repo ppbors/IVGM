@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject player;
     public ParticleSystem exhaust;
 
     // Start is called before the first frame update
     void Start()
-    {
-        player = GameObject.Find("Player");
+    {        
         exhaust = GameObject.Find("Particle System").GetComponent<ParticleSystem>();
-
-        ThrusterPlay(false);
     }
 
     // Update is called once per frame
