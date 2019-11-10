@@ -19,20 +19,32 @@ public class PlayerController : MonoBehaviour
     }
 
     // Turns the thruster on/off
-    public void ThrusterPlay(bool on)
+    public void ThrusterPlay(bool on = true)
     {
         if (on && !exhaust.isPlaying)
         {
             exhaust.Play();
         }
-        else if (!on && exhaust.isPlaying)
+        else if (!on && (exhaust.isPlaying || exhaust.isPaused))
         {
             exhaust.Stop();
         }
-        else
+        else // If play->play or stop->stop
         {
             Debug.Log("Invalid Toggle ThrusterPlay(...)");
         }
     }
-    
+
+    // Pauses the thruster
+    public void ThrusterPause()
+    {
+        if (exhaust.isPlaying)
+        {
+            exhaust.Pause();
+        }
+        else // If not initialized / active
+        {
+            Debug.Log("Invalid Pausing ThrusterPause()");
+        }
+    }
 }

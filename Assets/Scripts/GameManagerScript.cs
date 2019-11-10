@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
 
+
 public class GameManagerScript : MonoBehaviour
 {
     public Canvas MenuCanvas;
@@ -11,58 +12,76 @@ public class GameManagerScript : MonoBehaviour
 
     public PlayerController Player;
 
-    private bool menuShown;//If menu is shown
-    private bool gameRunning;//If game has started
+    private bool menuShown; // If menu is shown
+    private bool gameRunning; //If game has started
+    private bool gamePaused; // If game is paused
+
+    private const int x_Res = 1024;
+    private const int y_Res = 576;
 
     //Init game here, runs when start button is clicked
     public void StartGame()
     {
-        showMenu(false);
+        ShowMenu(false);
 
+        // Only toggle ship appearance at start
+        if (!gameRunning)
+        {
+            Player.gameObject.SetActive(true);
+            gameRunning = true;
+        }
 
         //Init game var values here ...
 
         // Initialize the player object: start thrusters
-        Player.ThrusterPlay(true);
+        Player.ThrusterPlay();
+        ShowHUD();
 
-        gameRunning = true;
-        //Debug.Log("GAME STARTED");
+        gamePaused = false;
     }
 
-    //Stops game and returns to game menu
+    // Stops game and returns to game menu
     public void StopGame()
     {
-
         gameRunning = false;
-        //Debug.Log("GAME STOPPED");
+
+        // Stopping of the game, a.k.a reset
+        // Reset game params
+        // Show start menu
     }
 
-    public void ShowMenu() { showMenu(true); }
-
-    //Enable/disable menu rendering
-    private void showMenu(bool Enabled)
+    // Paused game state, opens menu by default
+    public void PauseGame()
     {
-        Player.gameObject.SetActive(!Enabled);
-
-        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gameRunning ? "Continue" : "Start";
-        MenuCanvas.gameObject.SetActive(Enabled);
-        menuShown = Enabled;
-
-        showHUD(!Enabled);
+        // Leave player in screen, just pause the exhaust particle effect
+        Player.ThrusterPause();
+        gamePaused = true;
+        ShowHUD(false);
+        ShowMenu();
     }
 
-    //Enable/disable HUD rendering
-    private void showHUD(bool Enabled)
+    // Enable/disable menu rendering
+    public void ShowMenu(bool enabled = true)
     {
-        GameCanvas.gameObject.SetActive(Enabled);
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gamePaused ? "Continue" : "Start";
+        MenuCanvas.gameObject.SetActive(enabled);
+        menuShown = enabled;
+    }
+
+    // Enable/disable HUD rendering
+    private void ShowHUD(bool enabled = true)
+    {
+        GameCanvas.gameObject.SetActive(enabled);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //Set to specified resolution
-        Screen.SetResolution(1024, 576, true);
-        showMenu(true);
+        // Set to specified resolution
+        Screen.SetResolution(x_Res, y_Res, true);
+        gameRunning = false;
+        gamePaused = false;
+        ShowMenu();
     }
 
     // Update is called once per frame
@@ -73,7 +92,7 @@ public class GameManagerScript : MonoBehaviour
             if (menuShown)
                 Application.Quit();//Ignored in editor
             else
-                showMenu(true);//Re-enable menu
+                ShowMenu();//Re-enable menu
         }
     }
 }

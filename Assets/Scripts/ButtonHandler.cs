@@ -13,24 +13,26 @@ public class ButtonHandler : MonoBehaviour
         gm = go.GetComponent<GameManagerScript>();
     }
 
-    public void StartClicked()
-    {
-        gm.StartGame();
-    }
+    public void StartClicked() => gm.StartGame();
 
     public void OptionsClicked()
     {
-        //Todo...
+        gm.ShowMenu(false);
+
+        // Now show options menu
+        gm.MenuCanvas.GetComponent<MenuControl>().ShowOptions();
     }
 
-    public void ExitClicked()
+    public void ReturnClicked()
     {
-        Application.Quit();//Ignored in editor
-    }
+        // Stop showing options menu
+        gm.MenuCanvas.GetComponent<MenuControl>().ShowOptions(false);
 
-    public void MenuClicked()
-    {
+        // Start showing menu
         gm.ShowMenu();
     }
 
+    public void ExitClicked() => Application.Quit(); //Ignored in editor
+
+    public void MenuClicked() => gm.PauseGame();
 }
