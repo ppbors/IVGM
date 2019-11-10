@@ -17,4 +17,17 @@ public class ButtonHandler : MonoBehaviour
     {
         gm.StartGame();
     }
+    public void OptionsClicked()
+    {
+        //Todo...
+    }
+    public void ExitClicked()
+    {
+        Application.Quit();//Ignored in editor
+    }
+    public void MenuClicked()
+    {
+        gm.ShowMenu();
+    }
+
 }

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public Canvas UICanvas;
+    public Canvas MenuCanvas;
+    public Canvas GameCanvas;
 
     private bool menuShown;//If menu is shown
     private bool gameRunning;//If game has started
@@ -31,12 +32,22 @@ public class GameManagerScript : MonoBehaviour
         //Debug.Log("GAME STOPPED");
     }
 
+    public void ShowMenu() { showMenu(true); }
+
     //Enable/disable menu rendering
-    private void showMenu(bool enabled)
+    private void showMenu(bool Enabled)
     {
-        UICanvas.GetComponent<MenuControl>().Button1Text.text = gameRunning ? "Continue" : "Start";
-        UICanvas.gameObject.SetActive(enabled);
-        menuShown = enabled;
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gameRunning ? "Continue" : "Start";
+        MenuCanvas.gameObject.SetActive(Enabled);
+        menuShown = Enabled;
+
+        showHUD(!Enabled);
+    }
+
+    //Enable/disable HUD rendering
+    private void showHUD(bool Enabled)
+    {
+        GameCanvas.gameObject.SetActive(Enabled);
     }
 
     // Start is called before the first frame update
@@ -50,10 +61,12 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
-        if (!menuShown && Input.GetKey(KeyCode.Escape))
-            showMenu(true);//Re-enable menu
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            if (menuShown)
+                Application.Quit();//Ignored in editor
+            else
+                showMenu(true);//Re-enable menu
+        }
     }
 }
