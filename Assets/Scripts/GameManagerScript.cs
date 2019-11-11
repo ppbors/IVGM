@@ -24,18 +24,23 @@ public class GameManagerScript : MonoBehaviour
     {
         ShowMenu(false);
 
+        //Init game var values here ...
+        ShowHUD();
+
         // Only toggle ship appearance at start
-        if (!gameRunning)
+        if (!gameRunning) // Specific actions taken at new game
         {
             Player.gameObject.SetActive(true);
             gameRunning = true;
         }
+        else // Actions taken only when proceeding from paused game
+        {
+            Player.Freeze(false);
+        }
 
-        //Init game var values here ...
 
         // Initialize the player object: start thrusters
         Player.ThrusterPlay();
-        ShowHUD();
 
         gamePaused = false;
     }
@@ -55,6 +60,7 @@ public class GameManagerScript : MonoBehaviour
     {
         // Leave player in screen, just pause the exhaust particle effect
         Player.ThrusterPause();
+        Player.Freeze();
         gamePaused = true;
         ShowHUD(false);
         ShowMenu();
