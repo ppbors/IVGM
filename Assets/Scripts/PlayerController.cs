@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
         // TODO: The yaw and pitch should be relative to the tilt
         rb.transform.localRotation = Quaternion.Euler(pitch, yaw, -tilt);
-        Debug.Log("Tilt: " + tilt + '\t' + "Yaw: " + yaw + '\t' + "Pitch: " + pitch);
+        //Debug.Log("Tilt: " + tilt + '\t' + "Yaw: " + yaw + '\t' + "Pitch: " + pitch);
     }
     
 
