@@ -12,6 +12,9 @@ public class RandomRotator : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.angularVelocity = Random.insideUnitSphere * tumble;
+        // Experiment on right velocity. Rigidbody drag on 0
+        //rb.velocity = new Vector3(10,20,10);
+        rb.sleepThreshold = 1.0f;
     }
 
     public void Freeze(bool on = true)

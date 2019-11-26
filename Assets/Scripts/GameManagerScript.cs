@@ -37,17 +37,22 @@ public class GameManagerScript : MonoBehaviour
         {
             Player.gameObject.SetActive(true);
             gameRunning = true;
-            SpawnAsteroids(spawnSizeAsteroids);
+            InitialSpawnAsteroids(spawnSizeAsteroids);
+
         }
         else // Actions taken only when proceeding from paused game
         {
             Player.Freeze(false);
             FreezeAsteroids(false);
-        }
 
+        }
 
         // Initialize the player object: start thrusters
         Player.ThrusterPlay();
+
+        // Call updateSpawnAsteroids after 2 seconds. And then every 2 seconds.
+        // Turn off with CancelInvoke
+        InvokeRepeating("UpdateSpawnAsteroids", 2.0f, 2.0f);
 
         gamePaused = false;
     }
@@ -72,6 +77,7 @@ public class GameManagerScript : MonoBehaviour
         gamePaused = true;
         ShowHUD(false);
         ShowMenu();
+        CancelInvoke();
     }
 
     public bool IsPaused() => gamePaused;
@@ -101,6 +107,8 @@ public class GameManagerScript : MonoBehaviour
         gamePaused = false;
         Asteroids = new List<GameObject>();
         ShowMenu();
+ 
+
     }
 
     // Update is called once per frame
@@ -115,8 +123,31 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+
+    // Update Asteroid positions to keep having asteroids throughout the game
+    // Turn this off to stop 
+    private void UpdateSpawnAsteroids()
+    {
+        foreach(GameObject asteroid in Asteroids)
+        {
+            float x = Mathf.Abs(asteroid.transform.position.x);
+            float y = Mathf.Abs(asteroid.transform.position.y);
+            float z = Mathf.Abs(asteroid.transform.position.z);
+            float boundary_x = Mathf.Abs(Player.transform.position.x) + Boundary.xMax;
+            float boundary_y = Mathf.Abs(Player.transform.position.y) + Boundary.yMax;
+            float boundary_z = Mathf.Abs(Player.transform.position.z) + Boundary.zMax;
+            if (Vector3.Distance(asteroid.transform.position, Player.transform.position) > 350)
+            {
+                if (asteroid.GetComponent<Rigidbody>().IsSleeping())
+                    asteroid.transform.position = Player.transform.forward * 300;
+                else
+                    asteroid.transform.position = -1.0f * asteroid.transform.position;
+            }
+        }
+    }
+
     // Spawns random asteroids in the entirety of the world at random places 
-    private void SpawnAsteroids(uint n)
+    private void InitialSpawnAsteroids(uint n)
     {
         for (int i = 0; i < n; ++i)
         {
