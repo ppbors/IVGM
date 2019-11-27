@@ -8,12 +8,23 @@ public class RandomRotator : MonoBehaviour
     public float tumble;
     private Vector3 angularVelocity;
 
-    void Start()
+
+
+    private void Start()
     {
+        Vector3 force;
         rb = GetComponent<Rigidbody>();
         rb.angularVelocity = Random.insideUnitSphere * tumble;
+
         // Experiment on right velocity. Rigidbody drag on 0
-        //rb.velocity = new Vector3(10,20,10);
+        if(this.name.Contains("1"))
+            force = Random.Range(10,20) * transform.forward;
+        else if (this.name.Contains("2"))
+            force = Random.Range(5, 15) * transform.forward + transform.right * Random.Range(0, 5);
+        else
+            force = 10* transform.forward + transform.right *-1 * Random.Range(0, 5);
+
+        rb.velocity = force;
         rb.sleepThreshold = 1.0f;
     }
 

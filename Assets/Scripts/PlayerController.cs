@@ -6,18 +6,20 @@ public static class Boundary
 {
     /* Skybox size */
     public const float 
-        xMin = -300.0f, 
-        xMax = 300.0f, 
-        yMin = -300.0f, 
-        yMax = 300.0f, 
-        zMin = -300.0f, 
-        zMax = 300.0f;
+        xMin = -3000.0f, 
+        xMax = 3000.0f, 
+        yMin = -3000.0f, 
+        yMax = 3000.0f, 
+        zMin = -3000.0f, 
+        zMax = 3000.0f;
 }
 
 public class PlayerController : MonoBehaviour
 {
-    private GameManagerScript gm;
+    public AsteroidSpawn AS;
     public ParticleSystem exhaust;
+
+    private GameManagerScript gm;
     private Rigidbody rb;
 
     /* Player rigidbody constants */
@@ -48,9 +50,9 @@ public class PlayerController : MonoBehaviour
     /* --- */
 
     /* Temp */
-    public bool FULL360 = false; 
+    public bool FULL360 = false;
     /* --- */
-
+   
     void FixedUpdate()
     {
         if (gm.IsPaused() || !gm.IsRunning())
