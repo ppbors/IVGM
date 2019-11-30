@@ -32,15 +32,11 @@ public class PlayerController : MonoBehaviour
 
     /* Player movement variables / constants */
     private readonly float thrust = 1.0f; /* default thrust */
-   
+    private readonly float controlSpeed = 1.8f;
+
     private float yaw = 0.0f;    /* left/right yaw */
-    private readonly float maxYaw = 30.0f;
-
     private float pitch = 0.0f;  /* up/down pitch */
-    private readonly float maxPitch = 40.0f;
-
     private float tilt = 3.0f;   /* left/right tilt */
-    private readonly float maxTilt = 20.0f;
 
     private readonly float speedH = 1.0f; /* speed for yaw */
     private readonly float speedV = 1.0f; /* speed for pitch */
@@ -60,9 +56,6 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal"); /* a/d -> roll left / right */
         float moveVertical = Input.GetAxis("Vertical");     /* w/s -> forward / backward */
 
-        // TODO: If in 360 mode, inputs should be reversed after 180degree like so:
-        // bool isUpsideDown = System.Math.Abs(tilt % 360.0f) >= 180.0f;
-        // yaw += speedH * Input... * (-1 or 1)
         yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");
         tilt += speedZ * moveHorizontal;
@@ -83,20 +76,7 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(rb.position.z, Boundary.zMin, Boundary.zMax)
         );
 
-        /* Disallow 360 turns, upside down etc. This is optional. */
-        if (!FULL360)
-        {
-            if (yaw < -maxYaw || yaw > maxYaw)
-                yaw = yaw < -maxYaw ? -maxYaw : maxYaw;
-            if (pitch < -maxPitch || pitch > maxPitch)
-                pitch = pitch < -maxPitch ? -maxPitch : maxPitch;
-            if (tilt < -maxTilt || tilt > maxTilt)
-                tilt = tilt < -maxTilt ? -maxTilt : maxTilt;
-        }
-
-        // TODO: The yaw and pitch should be relative to the tilt
-        rb.transform.localRotation = Quaternion.Euler(pitch, yaw, -tilt);
-        //Debug.Log("Tilt: " + tilt + '\t' + "Yaw: " + yaw + '\t' + "Pitch: " + pitch);
+        transform.Rotate(new Vector3(pitch, yaw, -tilt) * controlSpeed * Time.deltaTime);
     }
     
 
@@ -114,6 +94,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
        
+    }
+
+    void OnColisionEnter(Collision collision)
+    {
+        /* TODO: lose hp? */
     }
 
     public void Freeze(bool on = true)
