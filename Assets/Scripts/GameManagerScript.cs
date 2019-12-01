@@ -35,7 +35,7 @@ public class GameManagerScript : MonoBehaviour
         // Only toggle ship appearance at start
         if (!gameRunning) // Specific actions taken at new game
         {
-            Player.gameObject.SetActive(true);
+            Player.Hide(false);
             gameRunning = true;
             SpawnAsteroids(spawnSizeAsteroids);
         }
@@ -100,6 +100,7 @@ public class GameManagerScript : MonoBehaviour
         gameRunning = false;
         gamePaused = false;
         Asteroids = new List<GameObject>();
+        Player.Hide();
         ShowMenu();
     }
 

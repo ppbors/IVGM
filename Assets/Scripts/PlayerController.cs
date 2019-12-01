@@ -43,10 +43,6 @@ public class PlayerController : MonoBehaviour
     private readonly float speedZ = 1.0f; /* speed for tilt */
     /* --- */
 
-    /* Temp */
-    public bool FULL360 = false; 
-    /* --- */
-
     void FixedUpdate()
     {
         if (gm.IsPaused() || !gm.IsRunning())
@@ -99,6 +95,11 @@ public class PlayerController : MonoBehaviour
     void OnColisionEnter(Collision collision)
     {
         /* TODO: lose hp? */
+    }
+
+    public void Hide(bool on = true)
+    {
+        gameObject.SetActive(!on);
     }
 
     public void Freeze(bool on = true)
