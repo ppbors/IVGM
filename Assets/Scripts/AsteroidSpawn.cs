@@ -52,7 +52,7 @@ public class AsteroidSpawn : MonoBehaviour
                                            Random.Range(Boundary.yMin/10.0f, Boundary.yMax/10.0f),
                                            Random.Range(Boundary.zMin/10.0f, Boundary.zMax/10.0f));
 
-            position = position + transform.forward * 1000;
+            position += transform.forward * 1000;
             GameObject asteroid = Instantiate(AsteroidPrefabs[Random.Range(0, 3)], position, Quaternion.identity);
             //asteroid.transform.SetParent(this.gameObject.transform);
             asteroid.transform.LookAt(transform.forward * -1000);
@@ -63,6 +63,7 @@ public class AsteroidSpawn : MonoBehaviour
     public void FreezeAsteroids(bool on = true)
     {
         freeze = on;
+
         foreach (GameObject asteroid in Asteroids)
         {
             asteroid.GetComponent<AsteroidBehavior>().Freeze(on);

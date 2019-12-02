@@ -6,44 +6,55 @@ public class AsteroidBehavior : MonoBehaviour
     public float tumble;
 
     private Rigidbody rb;
-    private Vector3 angularVelocity = Vector3.zero;
-    private Vector3 normalVelocity = Vector3.zero;
+    private Vector3 angularVelocity;
+    private Vector3 normalVelocity;
     private readonly float scale = 10.0f;
     private float x_Scale, y_Scale, z_Scale;
 
     private void Start()
     {
-        Vector3 force;
         rb = gameObject.GetComponent<Rigidbody>();
-        rb.angularVelocity = Random.insideUnitSphere * tumble;
 
-        // Experiment on right velocity. Rigidbody drag on 0.001
-        if(gameObject.name.Contains("1"))
-            force = Random.Range(10,20) * transform.forward;
+        angularVelocity = Vector3.zero;
+        normalVelocity = Vector3.zero;
+        RandomVelocity();
+        RandomSize();
+        
+    }
+
+    // Experiment on right velocity. Rigidbody drag on 0.001
+    // Different diretions for the 3 different prefabs
+    private void RandomVelocity()
+    {
+        //rb.angularVelocity = Random.insideUnitSphere * tumble;
+
+        if (gameObject.name.Contains("1"))
+            normalVelocity = Random.Range(10, 20) * transform.forward;
         else if (gameObject.name.Contains("2"))
-            force = Random.Range(5, 15) * transform.forward + transform.right * Random.Range(0, 5);
+            normalVelocity = Random.Range(5, 15) * transform.forward + transform.right * Random.Range(0, 5);
         else
-            force = 10* transform.forward + transform.right *-1 * Random.Range(0, 5);
+            normalVelocity = 10 * transform.forward + transform.right * -1 * Random.Range(0, 5);
 
-        rb.velocity = force;
+        rb.velocity = normalVelocity;
         rb.sleepThreshold = 1.0f;
+    }
 
-        // set random range for size Asteroid
+    // set random range for size Asteroid
+    private void RandomSize()
+    {
         x_Scale = Random.Range(5, 15);
         y_Scale = Random.Range(5, 15);
         z_Scale = Random.Range(5, 15);
         transform.localScale = new Vector3(x_Scale, y_Scale, z_Scale);
     }
 
-    private void Update()
-    {
-        
-    }
-
     /* Added: for paused game */
     public void Freeze(bool on = true)
     {
-        //rb = GetComponent<Rigidbody>();
+        // extra in case Freeze is called when Start hasn't finished
+        // (it happens)
+        rb = gameObject.GetComponent<Rigidbody>();
+
         if (on)
         {
             angularVelocity = rb.angularVelocity;
@@ -60,6 +71,8 @@ public class AsteroidBehavior : MonoBehaviour
         }
     }
 
+    // Change size of Asteroid
+    // Destroy when one scale < 1
     private void ChangeSize()
     {
         x_Scale -= 1.0f;
@@ -75,11 +88,9 @@ public class AsteroidBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Change size when impacted by laser
         if (collision.gameObject.name.Contains("laser"))
-        {
             ChangeSize();
-
-        }
     }
   
 }

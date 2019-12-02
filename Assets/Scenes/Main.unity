@@ -240,50 +240,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OptionsCanvas: {fileID: 718783071}
   Button1Text: {fileID: 1941071403}
---- !u!21 &172316317
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Explosion
-  m_Shader: {fileID: 4800000, guid: 1ffd39b3e33a04094a482b549da5c0f7, type: 3}
-  m_ShaderKeywords: SCATTERING_ON OCTAVES_4 QUALITY_HIGH
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _3DNoise:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 4648634f8231b4bf0860b6a2b4f6fadc, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _RampTex:
-        m_Texture: {fileID: 2800000, guid: de25a418e52274482b51702fff566bcd, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Alpha: 1
-    - _Frequency: 1
-    - _Heat: 1
-    - _Radius: -0.52216744
-    - _ScrollSpeed: 1
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _SpherePos: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &183215037
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +325,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dbe40d116a859a49a459002ab3bc739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &271486739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7897224253277414904, guid: d64049adede79544f9dbc6fe93c0448e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6666634031555917648}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e630df11cff6da8489fcbfa026b08372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &293576867
@@ -1608,7 +1576,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 4, y: 0, z: 0}
 --- !u!114 &1272492299
 MonoBehaviour:
@@ -2847,11 +2815,8 @@ MonoBehaviour:
   MenuCanvas: {fileID: 13479503}
   GameCanvas: {fileID: 1913817989}
   Player: {fileID: 230802211}
+  AsteroidSpawn: {fileID: 271486739}
   countdown: {fileID: 1586406983}
-  AsteroidPrefabs:
-  - {fileID: 151664, guid: fa49e460baf435b4780da7196c2ab473, type: 3}
-  - {fileID: 141316, guid: 84cc3cd234dfc9d4d9d2e92c0eb0af75, type: 3}
-  - {fileID: 130102, guid: 04d0bf4be9447154188d86f6e3b8dce9, type: 3}
 --- !u!4 &1877723837
 Transform:
   m_ObjectHideFlags: 0
@@ -3390,7 +3355,7 @@ PrefabInstance:
     - target: {fileID: 6666634031953548029, guid: d64049adede79544f9dbc6fe93c0448e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1150
+      value: 1050
       objectReference: {fileID: 0}
     - target: {fileID: 6666634031953548029, guid: d64049adede79544f9dbc6fe93c0448e,
         type: 3}

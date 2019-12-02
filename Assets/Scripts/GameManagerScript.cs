@@ -71,6 +71,7 @@ public class GameManagerScript : MonoBehaviour
         // Leave player in screen, just pause the exhaust particle effect
         Player.ThrusterPause();
         Player.Freeze();
+
         AsteroidSpawn.FreezeAsteroids();
         // FreezeAsteroids();
         gamePaused = true;
