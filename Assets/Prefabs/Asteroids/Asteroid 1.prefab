@@ -259,8 +259,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151664}
   serializedVersion: 2
-  m_Mass: 1e+9
-  m_Drag: 0
+  m_Mass: 100
+  m_Drag: 1
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -279,8 +279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a718c138b20419b499c3d92b17e6ff7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   tumble: 0.25
-  m_ExplosionPrefab: {fileID: 100000, guid: 9473bf090aaa04164967cdceab413088, type: 3}
 --- !u!65 &-2489300828554112163
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -292,8 +292,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6818333, y: 1.2773592, z: 1.5328573}
-  m_Center: {x: 0.04064746, y: 0.13867941, z: 0.05770264}
+  m_Size: {x: 1.2639189, y: 1.2266445, z: 1.3649553}
+  m_Center: {x: 0.13195944, y: 0.11332226, z: -0.026248276}
 --- !u!1 &176588
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,8 +4,6 @@ using System.Collections;
 public class RandomRotator : MonoBehaviour
 {
     public float tumble;
-    public GameObject m_ExplosionPrefab;
-
 
     private Rigidbody rb;
     private Vector3 angularVelocity;
