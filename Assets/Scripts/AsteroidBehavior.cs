@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RandomRotator : MonoBehaviour
+public class AsteroidBehavior : MonoBehaviour
 {
     public float tumble;
 
     private Rigidbody rb;
     private Vector3 angularVelocity;
-
+    private Vector3 normalVelocity;
     private readonly float scale = 10.0f;
 
 
@@ -18,16 +18,16 @@ public class RandomRotator : MonoBehaviour
         rb.angularVelocity = Random.insideUnitSphere * tumble;
 
         // Experiment on right velocity. Rigidbody drag on 0
-        if(this.name.Contains("1"))
+        if(gameObject.name.Contains("1"))
             force = Random.Range(10,20) * transform.forward;
-        else if (this.name.Contains("2"))
+        else if (gameObject.name.Contains("2"))
             force = Random.Range(5, 15) * transform.forward + transform.right * Random.Range(0, 5);
         else
             force = 10* transform.forward + transform.right *-1 * Random.Range(0, 5);
 
         rb.velocity = force;
         rb.sleepThreshold = 1.0f;
-        // Master transform.localScale = new Vector3(scale, scale, scale);
+        transform.localScale = new Vector3(Random.Range(5,15), Random.Range(5, 15), Random.Range(5, 15));
     }
 
     /* Added: for paused game */
@@ -36,13 +36,16 @@ public class RandomRotator : MonoBehaviour
         if (on)
         {
             angularVelocity = rb.angularVelocity;
+            normalVelocity = rb.velocity;
             rb.angularVelocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
         else
         {
             rb.constraints = RigidbodyConstraints.None;
             rb.angularVelocity = angularVelocity;
+            rb.velocity = normalVelocity;
         }
     }
 

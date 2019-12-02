@@ -9,7 +9,7 @@ public class AsteroidSpawn : MonoBehaviour
     private List<GameObject> Asteroids;
 
     private bool spawn;
-    private const uint spawnSizeAsteroids = 1000;
+    private const uint spawnSizeAsteroids = 500;
     private uint spawnCount = 0;
     private void Start()
     {
@@ -30,11 +30,8 @@ public class AsteroidSpawn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Trigger");
-
         if (other.gameObject == player && !spawn)
-            spawn = true;
-            
+            spawn = true;        
     }
 
     private void OnTriggerExit(Collider other)
@@ -43,17 +40,6 @@ public class AsteroidSpawn : MonoBehaviour
             spawn = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("HIT");
-        StartSpawn();
-    }
-
-    public void StartSpawn()
-    {
-        this.transform.LookAt(player.transform.position);
-        SpawnAsteroids(spawnSizeAsteroids);
-    }
 
     // Spawns random asteroids in the entirety of the world at random places 
     private void SpawnAsteroids(uint n)
@@ -65,10 +51,10 @@ public class AsteroidSpawn : MonoBehaviour
                                            Random.Range(Boundary.yMin/10.0f, Boundary.yMax/10.0f),
                                            Random.Range(Boundary.zMin/10.0f, Boundary.zMax/10.0f));
 
-            position = position + player.transform.position + (player.transform.forward * 500);
-            GameObject asteroid = Instantiate(AsteroidPrefabs[Random.Range(0, 2)], position, Quaternion.identity);
+            position = position + transform.forward * 1000;
+            GameObject asteroid = Instantiate(AsteroidPrefabs[Random.Range(0, 3)], position, Quaternion.identity);
             //asteroid.transform.SetParent(this.gameObject.transform);
-            asteroid.transform.LookAt(player.transform.forward * -1000);
+            asteroid.transform.LookAt(transform.forward * -1000);
             Asteroids.Add(asteroid);
         }
     }
@@ -77,7 +63,7 @@ public class AsteroidSpawn : MonoBehaviour
     {
         foreach (GameObject asteroid in Asteroids)
         {
-            asteroid.GetComponent<RandomRotator>().Freeze(on);
+            asteroid.GetComponent<AsteroidBehavior>().Freeze(on);
         }
     }
 }
