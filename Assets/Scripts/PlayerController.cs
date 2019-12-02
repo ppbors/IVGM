@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem exhaust;
     private Rigidbody rb;
 
+    /* Exhaust particle effect constants */
+    private readonly float idleParticleSpeed = 1.0f;
+    private readonly float moveParticleSpeed = 10.0f;
+    private readonly float idleParticleScale = 1.0f;
+    private readonly float moveParticleScale = 2.0f;
+    /* --- */
+
     /* Player rigidbody constants */
     private readonly float mass = 10.0f;
     private readonly float drag = 0.3f;
@@ -60,6 +67,8 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(yaw,             /* Left / right */
                                        pitch,           /* Up / Down */
                                        moveVertical);   /* Forward / backward */
+
+        ThrusterIntensify(moveVertical > 0);
 
         /* Relative force (with respect to player rotation) */
         rb.AddRelativeForce(Vector3.forward * moveVertical * thrust, ForceMode.Impulse);
@@ -121,6 +130,13 @@ public class PlayerController : MonoBehaviour
             rb.velocity = velocity;
             rb.angularVelocity = angularVelocity;
         }
+    }
+
+    private void ThrusterIntensify(bool on = true)
+    {
+        var main = exhaust.main;
+        main.startSpeed = on ? moveParticleSpeed : idleParticleSpeed;
+        main.startSize = on ? moveParticleScale : idleParticleScale;
     }
 
     // Turns the thruster on/off

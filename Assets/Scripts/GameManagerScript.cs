@@ -11,6 +11,7 @@ public class GameManagerScript : MonoBehaviour
     public Canvas GameCanvas;
 
     public PlayerController Player;
+    public Countdown countdown;
 
     private List <GameObject> Asteroids;
     public GameObject[] AsteroidPrefabs;
@@ -38,6 +39,7 @@ public class GameManagerScript : MonoBehaviour
             Player.Hide(false);
             gameRunning = true;
             SpawnAsteroids(spawnSizeAsteroids);
+            countdown.startCountdown();
         }
         else // Actions taken only when proceeding from paused game
         {
