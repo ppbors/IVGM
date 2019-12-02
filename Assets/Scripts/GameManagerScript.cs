@@ -11,10 +11,11 @@ public class GameManagerScript : MonoBehaviour
     public Canvas GameCanvas;
 
     public PlayerController Player;
+    public AsteroidSpawn AsteroidSpawn;
     public Countdown countdown;
 
-    private List <GameObject> Asteroids;
-    public GameObject[] AsteroidPrefabs;
+    //private List <GameObject> Asteroids;
+    //public GameObject[] AsteroidPrefabs;
 
     private bool menuShown; // If menu is shown
     private bool gameRunning; //If game has started
@@ -23,7 +24,7 @@ public class GameManagerScript : MonoBehaviour
     private const int x_Res = 1024;
     private const int y_Res = 576;
 
-    private const uint spawnSizeAsteroids = 700;
+    
 
     //Init game here, runs when start button is clicked
     public void StartGame()
@@ -38,15 +39,15 @@ public class GameManagerScript : MonoBehaviour
         {
             Player.Hide(false);
             gameRunning = true;
-            SpawnAsteroids(spawnSizeAsteroids);
-            countdown.startCountdown();
+
+//            SpawnAsteroids(spawnSizeAsteroids);
+//            countdown.startCountdown();
         }
         else // Actions taken only when proceeding from paused game
         {
             Player.Freeze(false);
-            FreezeAsteroids(false);
+            AsteroidSpawn.FreezeAsteroids(false);
         }
-
 
         // Initialize the player object: start thrusters
         Player.ThrusterPlay();
@@ -70,10 +71,13 @@ public class GameManagerScript : MonoBehaviour
         // Leave player in screen, just pause the exhaust particle effect
         Player.ThrusterPause();
         Player.Freeze();
-        FreezeAsteroids();
+
+        AsteroidSpawn.FreezeAsteroids();
+        // FreezeAsteroids();
         gamePaused = true;
         ShowHUD(false);
         ShowMenu();
+        CancelInvoke();
     }
 
     public bool IsPaused() => gamePaused;
@@ -101,46 +105,26 @@ public class GameManagerScript : MonoBehaviour
         Screen.SetResolution(x_Res, y_Res, true);
         gameRunning = false;
         gamePaused = false;
-        Asteroids = new List<GameObject>();
+
+        //Asteroids = new List<GameObject>();
         Player.Hide();
         ShowMenu();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        // TODO
+        if (Input.GetKeyDown("m"))
         {
+            //if (menuShown)
+            //Application.Quit();//Ignored in editor
             if (menuShown)
-                Application.Quit();//Ignored in editor
+                StartGame();
             else
-                ShowMenu();//Re-enable menu
+                PauseGame();
         }
     }
 
-    // Spawns random asteroids in the entirety of the world at random places 
-    private void SpawnAsteroids(uint n)
-    {
-        for (int i = 0; i < n; ++i)
-        {
-            /* Lets just assume no two asteroids get spawned too close to eachother */
-            Vector3 position = new Vector3(Random.Range(Boundary.xMin, Boundary.xMax), 
-                                           Random.Range(Boundary.yMin, Boundary.yMax), 
-                                           Random.Range(Boundary.zMin, Boundary.zMax));
-            Asteroids.Add(
-                Instantiate(AsteroidPrefabs[Random.Range(0, 2)], 
-                            position, 
-                            Quaternion.identity) 
-                as GameObject
-            );
-        }
-    }
-
-    private void FreezeAsteroids(bool on = true)
-    {
-        foreach (GameObject asteroid in Asteroids)
-        {
-            asteroid.GetComponent<RandomRotator>().Freeze(on);
-        }
-    }
 }

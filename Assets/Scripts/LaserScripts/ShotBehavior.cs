@@ -23,7 +23,8 @@ public class ShotBehavior : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         // shot destroys itself once it hits something with a trigger.
-        GameObject.Destroy(this.gameObject);
+        if(!other.gameObject.name.Contains("Spawn"))
+            GameObject.Destroy(this.gameObject);
     }
 
     private void OnCollisionEnter(Collision other)
