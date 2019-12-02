@@ -6,18 +6,18 @@ public class AsteroidBehavior : MonoBehaviour
     public float tumble;
 
     private Rigidbody rb;
-    private Vector3 angularVelocity;
-    private Vector3 normalVelocity;
+    private Vector3 angularVelocity = Vector3.zero;
+    private Vector3 normalVelocity = Vector3.zero;
     private readonly float scale = 10.0f;
-
+    private float x_Scale, y_Scale, z_Scale;
 
     private void Start()
     {
         Vector3 force;
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
         rb.angularVelocity = Random.insideUnitSphere * tumble;
 
-        // Experiment on right velocity. Rigidbody drag on 0
+        // Experiment on right velocity. Rigidbody drag on 0.001
         if(gameObject.name.Contains("1"))
             force = Random.Range(10,20) * transform.forward;
         else if (gameObject.name.Contains("2"))
@@ -27,12 +27,23 @@ public class AsteroidBehavior : MonoBehaviour
 
         rb.velocity = force;
         rb.sleepThreshold = 1.0f;
-        transform.localScale = new Vector3(Random.Range(5,15), Random.Range(5, 15), Random.Range(5, 15));
+
+        // set random range for size Asteroid
+        x_Scale = Random.Range(5, 15);
+        y_Scale = Random.Range(5, 15);
+        z_Scale = Random.Range(5, 15);
+        transform.localScale = new Vector3(x_Scale, y_Scale, z_Scale);
+    }
+
+    private void Update()
+    {
+        
     }
 
     /* Added: for paused game */
     public void Freeze(bool on = true)
     {
+        //rb = GetComponent<Rigidbody>();
         if (on)
         {
             angularVelocity = rb.angularVelocity;
@@ -49,8 +60,26 @@ public class AsteroidBehavior : MonoBehaviour
         }
     }
 
-    void OnColisionEnter(Collision collision)
+    private void ChangeSize()
     {
-        /* TODO: ... */
+        x_Scale -= 1.0f;
+        y_Scale -= 1.0f;
+        z_Scale -= 1.0f;
+
+        if (x_Scale <= 1 || y_Scale <= 1 || z_Scale <= 1)
+            Destroy(gameObject);
+
+        transform.localScale = new Vector3(x_Scale, y_Scale, z_Scale);
+
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("laser"))
+        {
+            ChangeSize();
+
+        }
+    }
+  
 }

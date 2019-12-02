@@ -9,6 +9,7 @@ public class AsteroidSpawn : MonoBehaviour
     private List<GameObject> Asteroids;
 
     private bool spawn;
+    private bool freeze;
     private const uint spawnSizeAsteroids = 500;
     private uint spawnCount = 0;
     private void Start()
@@ -19,7 +20,7 @@ public class AsteroidSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (spawn && spawnCount < spawnSizeAsteroids)
+        if (!freeze && spawn && spawnCount < spawnSizeAsteroids)
         {
             SpawnAsteroids(1);
             spawnCount += 1;
@@ -59,8 +60,9 @@ public class AsteroidSpawn : MonoBehaviour
         }
     }
 
-    private void FreezeAsteroids(bool on = true)
+    public void FreezeAsteroids(bool on = true)
     {
+        freeze = on;
         foreach (GameObject asteroid in Asteroids)
         {
             asteroid.GetComponent<AsteroidBehavior>().Freeze(on);

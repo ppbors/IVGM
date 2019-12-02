@@ -11,7 +11,7 @@ public class GameManagerScript : MonoBehaviour
     public Canvas GameCanvas;
 
     public PlayerController Player;
-    public GameObject AsteroidSpawn;
+    public AsteroidSpawn AsteroidSpawn;
     public Countdown countdown;
 
     //private List <GameObject> Asteroids;
@@ -46,7 +46,7 @@ public class GameManagerScript : MonoBehaviour
         else // Actions taken only when proceeding from paused game
         {
             Player.Freeze(false);
-            //FreezeAsteroids(false);
+            AsteroidSpawn.FreezeAsteroids(false);
         }
 
         // Initialize the player object: start thrusters
@@ -71,6 +71,7 @@ public class GameManagerScript : MonoBehaviour
         // Leave player in screen, just pause the exhaust particle effect
         Player.ThrusterPause();
         Player.Freeze();
+        AsteroidSpawn.FreezeAsteroids();
         // FreezeAsteroids();
         gamePaused = true;
         ShowHUD(false);
@@ -113,12 +114,15 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        // TODO
+        if (Input.GetKeyDown("m"))
         {
+            //if (menuShown)
+            //Application.Quit();//Ignored in editor
             if (menuShown)
-                Application.Quit();//Ignored in editor
+                StartGame();
             else
-                ShowMenu();//Re-enable menu
+                PauseGame();
         }
     }
 
