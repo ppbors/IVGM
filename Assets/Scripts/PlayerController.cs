@@ -52,7 +52,13 @@ public class PlayerController : MonoBehaviour
     /* Temp */
     public bool FULL360 = false;
     /* --- */
-   
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Asteroid"))
+            Debug.Log("YOU GOT HIT"); // Call 4G function here
+    }
+
     void FixedUpdate()
     {
         if (gm.IsPaused() || !gm.IsRunning())

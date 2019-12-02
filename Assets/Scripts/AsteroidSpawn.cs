@@ -9,7 +9,7 @@ public class AsteroidSpawn : MonoBehaviour
     private List<GameObject> Asteroids;
 
     private bool spawn;
-    private const uint spawnSizeAsteroids = 7000;
+    private const uint spawnSizeAsteroids = 1000;
     private uint spawnCount = 0;
     private void Start()
     {
@@ -21,8 +21,8 @@ public class AsteroidSpawn : MonoBehaviour
     {
         if (spawn && spawnCount < spawnSizeAsteroids)
         {
-            SpawnAsteroids(10);
-            spawnCount += 10;
+            SpawnAsteroids(1);
+            spawnCount += 1;
             //spawnCount += x
         }
 
@@ -30,7 +30,7 @@ public class AsteroidSpawn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger");
+        //Debug.Log("Trigger");
 
         if (other.gameObject == player && !spawn)
             spawn = true;

@@ -3,12 +3,32 @@ using System.Collections;
 
 public class RandomRotator : MonoBehaviour
 {
-    [SerializeField]
-    private Rigidbody rb;
     public float tumble;
+    public GameObject m_ExplosionPrefab;
+
+
+    private Rigidbody rb;
     private Vector3 angularVelocity;
 
+    private int hit = 0;
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.gameObject.name.Contains("laser")){
+            Debug.Log("LASER");
+            GameObject go = GameObject.Instantiate(m_ExplosionPrefab, collision.gameObject.transform.position, this.transform.rotation);
+            go.transform.SetParent(this.gameObject.transform);
+            GameObject.Destroy(go, 1);
+
+
+            //count how manny times hit
+            hit++;
+            //if (hit > 4)
+                //explodeAsteroid();
+        }
+
+    }
 
     private void Start()
     {
