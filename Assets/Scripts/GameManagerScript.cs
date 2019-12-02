@@ -12,6 +12,10 @@ public class GameManagerScript : MonoBehaviour
 
     public PlayerController Player;
     public GameObject AsteroidSpawn;
+    public Countdown countdown;
+
+    //private List <GameObject> Asteroids;
+    //public GameObject[] AsteroidPrefabs;
 
     private bool menuShown; // If menu is shown
     private bool gameRunning; //If game has started
@@ -33,8 +37,11 @@ public class GameManagerScript : MonoBehaviour
         // Only toggle ship appearance at start
         if (!gameRunning) // Specific actions taken at new game
         {
-            Player.gameObject.SetActive(true);
+            Player.Hide(false);
             gameRunning = true;
+
+//            SpawnAsteroids(spawnSizeAsteroids);
+//            countdown.startCountdown();
         }
         else // Actions taken only when proceeding from paused game
         {
@@ -96,6 +103,9 @@ public class GameManagerScript : MonoBehaviour
         Screen.SetResolution(x_Res, y_Res, true);
         gameRunning = false;
         gamePaused = false;
+
+        //Asteroids = new List<GameObject>();
+        Player.Hide();
         ShowMenu();
 
     }

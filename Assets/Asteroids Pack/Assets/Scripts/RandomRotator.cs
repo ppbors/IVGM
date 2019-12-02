@@ -10,25 +10,8 @@ public class RandomRotator : MonoBehaviour
     private Rigidbody rb;
     private Vector3 angularVelocity;
 
-    private int hit = 0;
+    private readonly float scale = 10.0f;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-        if (collision.gameObject.name.Contains("laser")){
-            Debug.Log("LASER");
-            GameObject go = GameObject.Instantiate(m_ExplosionPrefab, collision.gameObject.transform.position, this.transform.rotation);
-            go.transform.SetParent(this.gameObject.transform);
-            GameObject.Destroy(go, 1);
-
-
-            //count how manny times hit
-            hit++;
-            //if (hit > 4)
-                //explodeAsteroid();
-        }
-
-    }
 
     private void Start()
     {
@@ -46,8 +29,10 @@ public class RandomRotator : MonoBehaviour
 
         rb.velocity = force;
         rb.sleepThreshold = 1.0f;
+        // Master transform.localScale = new Vector3(scale, scale, scale);
     }
 
+    /* Added: for paused game */
     public void Freeze(bool on = true)
     {
         if (on)
@@ -61,5 +46,10 @@ public class RandomRotator : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
             rb.angularVelocity = angularVelocity;
         }
+    }
+
+    void OnColisionEnter(Collision collision)
+    {
+        /* TODO: ... */
     }
 }

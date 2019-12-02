@@ -22,6 +22,13 @@ public class PlayerController : MonoBehaviour
     private GameManagerScript gm;
     private Rigidbody rb;
 
+    /* Exhaust particle effect constants */
+    private readonly float idleParticleSpeed = 1.0f;
+    private readonly float moveParticleSpeed = 10.0f;
+    private readonly float idleParticleScale = 1.0f;
+    private readonly float moveParticleScale = 2.0f;
+    /* --- */
+
     /* Player rigidbody constants */
     private readonly float mass = 10.0f;
     private readonly float drag = 0.3f;
@@ -34,30 +41,16 @@ public class PlayerController : MonoBehaviour
 
     /* Player movement variables / constants */
     private readonly float thrust = 1.0f; /* default thrust */
-   
+    private readonly float controlSpeed = 1.8f;
+
     private float yaw = 0.0f;    /* left/right yaw */
-    private readonly float maxYaw = 30.0f;
-
     private float pitch = 0.0f;  /* up/down pitch */
-    private readonly float maxPitch = 40.0f;
-
     private float tilt = 3.0f;   /* left/right tilt */
-    private readonly float maxTilt = 20.0f;
 
     private readonly float speedH = 1.0f; /* speed for yaw */
     private readonly float speedV = 1.0f; /* speed for pitch */
     private readonly float speedZ = 1.0f; /* speed for tilt */
     /* --- */
-
-    /* Temp */
-    public bool FULL360 = false;
-    /* --- */
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name.Contains("Asteroid"))
-            Debug.Log("YOU GOT HIT"); // Call 4G function here
-    }
 
     void FixedUpdate()
     {
@@ -68,9 +61,6 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal"); /* a/d -> roll left / right */
         float moveVertical = Input.GetAxis("Vertical");     /* w/s -> forward / backward */
 
-        // TODO: If in 360 mode, inputs should be reversed after 180degree like so:
-        // bool isUpsideDown = System.Math.Abs(tilt % 360.0f) >= 180.0f;
-        // yaw += speedH * Input... * (-1 or 1)
         yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");
         tilt += speedZ * moveHorizontal;
@@ -79,6 +69,8 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(yaw,             /* Left / right */
                                        pitch,           /* Up / Down */
                                        moveVertical);   /* Forward / backward */
+
+        ThrusterIntensify(moveVertical > 0);
 
         /* Relative force (with respect to player rotation) */
         rb.AddRelativeForce(Vector3.forward * moveVertical * thrust, ForceMode.Impulse);
@@ -91,20 +83,7 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(rb.position.z, Boundary.zMin, Boundary.zMax)
         );
 
-        /* Disallow 360 turns, upside down etc. This is optional. */
-        if (!FULL360)
-        {
-            if (yaw < -maxYaw || yaw > maxYaw)
-                yaw = yaw < -maxYaw ? -maxYaw : maxYaw;
-            if (pitch < -maxPitch || pitch > maxPitch)
-                pitch = pitch < -maxPitch ? -maxPitch : maxPitch;
-            if (tilt < -maxTilt || tilt > maxTilt)
-                tilt = tilt < -maxTilt ? -maxTilt : maxTilt;
-        }
-
-        // TODO: The yaw and pitch should be relative to the tilt
-        rb.transform.localRotation = Quaternion.Euler(pitch, yaw, -tilt);
-        //Debug.Log("Tilt: " + tilt + '\t' + "Yaw: " + yaw + '\t' + "Pitch: " + pitch);
+        transform.Rotate(new Vector3(pitch, yaw, -tilt) * controlSpeed * Time.deltaTime);
     }
     
 
@@ -122,6 +101,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
        
+    }
+
+    void OnColisionEnter(Collision collision)
+    {
+        /* TODO: lose hp? */
+    }
+
+    public void Hide(bool on = true)
+    {
+        gameObject.SetActive(!on);
     }
 
     public void Freeze(bool on = true)
@@ -143,6 +132,13 @@ public class PlayerController : MonoBehaviour
             rb.velocity = velocity;
             rb.angularVelocity = angularVelocity;
         }
+    }
+
+    private void ThrusterIntensify(bool on = true)
+    {
+        var main = exhaust.main;
+        main.startSpeed = on ? moveParticleSpeed : idleParticleSpeed;
+        main.startSize = on ? moveParticleScale : idleParticleScale;
     }
 
     // Turns the thruster on/off
