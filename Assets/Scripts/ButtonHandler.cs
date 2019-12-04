@@ -33,7 +33,7 @@ public class ButtonHandler : MonoBehaviour
         gm.ShowMenu();
     }
 
-    public void ExitClicked() => Application.Quit(); //Ignored in editor
+    public void ExitClicked() => Application.Quit(); // Ignored in editor
 
     public void MenuClicked() => gm.PauseGame();
 }
