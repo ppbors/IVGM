@@ -45,13 +45,15 @@ public class GameManagerScript : MonoBehaviour
         }
         else // Actions taken only when proceeding from paused game
         {
-            Player.Freeze(false);
+            //Player.Freeze(false);
             AsteroidSpawn.FreezeAsteroids(false);
         }
 
         // Initialize the player object: start thrusters
         Player.ThrusterPlay();
 
+        // Start game time
+        Time.timeScale = 1;
         gamePaused = false;
     }
 
@@ -63,21 +65,24 @@ public class GameManagerScript : MonoBehaviour
         // Stopping of the game, a.k.a reset
         // Reset game params
         // Show start menu
+        Time.timeScale = 0; // Pause game time
     }
 
     // Paused game state, opens menu by default
     public void PauseGame()
     {
         // Leave player in screen, just pause the exhaust particle effect
-        Player.ThrusterPause();
-        Player.Freeze();
+        //Player.ThrusterPause();
+        //Player.Freeze();
+
+        // Pause game time
+        Time.timeScale = 0;
 
         AsteroidSpawn.FreezeAsteroids();
-        // FreezeAsteroids();
         gamePaused = true;
         ShowHUD(false);
         ShowMenu();
-        CancelInvoke();
+        //CancelInvoke();
     }
 
     public bool IsPaused() => gamePaused;
@@ -116,12 +121,10 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // TODO
-        if (Input.GetKeyDown("m"))
+        // Open/close menu with 'm' key
+        if(Input.GetKeyDown("m"))
         {
-            //if (menuShown)
-            //Application.Quit();//Ignored in editor
-            if (menuShown)
+            if(menuShown)
                 StartGame();
             else
                 PauseGame();
