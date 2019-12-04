@@ -90,6 +90,7 @@ public class GameManagerScript : MonoBehaviour
         MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gamePaused ? "Continue" : "Start";
         MenuCanvas.gameObject.SetActive(enabled);
         menuShown = enabled;
+        Cursor.visible = enabled;
     }
 
     // Enable/disable HUD rendering
