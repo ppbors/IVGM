@@ -20,7 +20,7 @@ public class CannonBehavior : MonoBehaviour {
             // Instantiate laser
 			GameObject go = GameObject.Instantiate(m_laserPrefab, transform.position, transform.rotation) as GameObject;
 
-            // Destroys itself after 3seconds
+            // Destroys itself after 3 seconds
             GameObject.Destroy(go, 3f);
 		}
 	}

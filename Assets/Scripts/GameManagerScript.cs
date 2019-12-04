@@ -31,7 +31,7 @@ public class GameManagerScript : MonoBehaviour
     {
         ShowMenu(false);
 
-        //Init game var values here ...
+        // Initialize game variables here
         ShowHUD();
 
         // Only toggle ship appearance at start
@@ -40,20 +40,20 @@ public class GameManagerScript : MonoBehaviour
             Player.Hide(false);
             gameRunning = true;
 
-//            SpawnAsteroids(spawnSizeAsteroids);
-//            countdown.startCountdown();
-        }
-        else // Actions taken only when proceeding from paused game
-        {
-            //Player.Freeze(false);
-            AsteroidSpawn.FreezeAsteroids(false);
-        }
+            // Initialize player object: start thrusters
+            Player.ThrusterPlay();
 
-        // Initialize the player object: start thrusters
-        Player.ThrusterPlay();
+            //SpawnAsteroids(spawnSizeAsteroids);
+            //countdown.startCountdown();
+        }
+        else 
+        {
+            // Actions taken only when proceeding from paused game
+        }
 
         // Start game time
         Time.timeScale = 1;
+        AsteroidSpawn.FreezeAsteroids(false); // Continue spawning asteroids
         gamePaused = false;
     }
 
@@ -71,13 +71,10 @@ public class GameManagerScript : MonoBehaviour
     // Paused game state, opens menu by default
     public void PauseGame()
     {
-        // Leave player in screen, just pause the exhaust particle effect
-        //Player.ThrusterPause();
-        //Player.Freeze();
-
         // Pause game time
         Time.timeScale = 0;
 
+        // Stop spawning new asteroids while game is paused
         AsteroidSpawn.FreezeAsteroids();
         gamePaused = true;
         ShowHUD(false);
@@ -115,7 +112,6 @@ public class GameManagerScript : MonoBehaviour
         //Asteroids = new List<GameObject>();
         Player.Hide();
         ShowMenu();
-
     }
 
     // Update is called once per frame
