@@ -1494,6 +1494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_laserPrefab: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
+  gm: {fileID: 1877723836}
 --- !u!1 &1272492295
 GameObject:
   m_ObjectHideFlags: 0
@@ -3342,6 +3343,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AsteroidSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 7897224253277414904, guid: d64049adede79544f9dbc6fe93c0448e,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 415496908}
     - target: {fileID: 6666634031953548029, guid: d64049adede79544f9dbc6fe93c0448e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3397,10 +3403,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7897224253277414904, guid: d64049adede79544f9dbc6fe93c0448e,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 415496908}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d64049adede79544f9dbc6fe93c0448e, type: 3}
