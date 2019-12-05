@@ -1592,10 +1592,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 415496909}
-  distance: 10
-  height: 5
-  heightDamping: 2
-  rotationDamping: 3
 --- !u!1 &1326652305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2818,6 +2814,8 @@ MonoBehaviour:
   Player: {fileID: 230802211}
   AsteroidSpawn: {fileID: 271486739}
   countdown: {fileID: 1586406983}
+  EnemyPrefab: {fileID: 2702977146897374164, guid: 54f5d00d4f3e55349a12d1a80920e803,
+    type: 3}
 --- !u!4 &1877723837
 Transform:
   m_ObjectHideFlags: 0

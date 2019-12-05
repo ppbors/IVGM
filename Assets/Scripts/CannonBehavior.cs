@@ -10,11 +10,11 @@ public class CannonBehavior : MonoBehaviour {
 	void Update() 
 	{
         // Do not shoot laser when game is paused
-        if(gm.IsPaused())
+        if (gm.IsPaused())
         {
             return;
         }
-        else if(Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space))
 		{
             // Instantiate laser
 			GameObject go = GameObject.Instantiate(m_laserPrefab, transform.position, transform.rotation) as GameObject;
