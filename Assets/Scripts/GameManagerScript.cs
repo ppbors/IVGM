@@ -33,7 +33,7 @@ public class GameManagerScript : MonoBehaviour
     {
         ShowMenu(false);
 
-        //Init game var values here ...
+        // Initialize game variables here
         ShowHUD();
 
         // Only toggle ship appearance at start
@@ -42,19 +42,21 @@ public class GameManagerScript : MonoBehaviour
             Player.Hide(false);
             gameRunning = true;
 
+            // Initialize player object: start thrusters
+            Player.ThrusterPlay();
+
             GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
-//            SpawnAsteroids(spawnSizeAsteroids);
-//            countdown.startCountdown();
+//          SpawnAsteroids(spawnSizeAsteroids);
+//          countdown.startCountdown();
         }
-        else // Actions taken only when proceeding from paused game
+        else 
         {
-            Player.Freeze(false);
-            AsteroidSpawn.FreezeAsteroids(false);
+            // Actions taken only when proceeding from paused game
         }
 
-        // Initialize the player object: start thrusters
-        Player.ThrusterPlay();
-
+        // Start game time
+        Time.timeScale = 1;
+        AsteroidSpawn.FreezeAsteroids(false); // Continue spawning asteroids
         gamePaused = false;
     }
 
@@ -66,21 +68,21 @@ public class GameManagerScript : MonoBehaviour
         // Stopping of the game, a.k.a reset
         // Reset game params
         // Show start menu
+        Time.timeScale = 0; // Pause game time
     }
 
     // Paused game state, opens menu by default
     public void PauseGame()
     {
-        // Leave player in screen, just pause the exhaust particle effect
-        Player.ThrusterPause();
-        Player.Freeze();
+        // Pause game time
+        Time.timeScale = 0;
 
+        // Stop spawning new asteroids while game is paused
         AsteroidSpawn.FreezeAsteroids();
-        // FreezeAsteroids();
         gamePaused = true;
         ShowHUD(false);
         ShowMenu();
-        CancelInvoke();
+        //CancelInvoke();
     }
 
     public bool IsPaused() => gamePaused;
@@ -113,18 +115,15 @@ public class GameManagerScript : MonoBehaviour
         //Asteroids = new List<GameObject>();
         Player.Hide();
         ShowMenu();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        // TODO
-        if (Input.GetKeyDown("m"))
+        // Open/close menu with 'm' key
+        if(Input.GetKeyDown("m"))
         {
-            //if (menuShown)
-            //Application.Quit();//Ignored in editor
-            if (menuShown)
+            if(menuShown)
                 StartGame();
             else
                 PauseGame();

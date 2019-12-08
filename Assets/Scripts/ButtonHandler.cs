@@ -18,9 +18,10 @@ public class ButtonHandler : MonoBehaviour
     public void OptionsClicked()
     {
         gm.ShowMenu(false);
+        Cursor.visible = enabled; // Show cursor in Options menu
 
         // Now show options menu
-        gm.MenuCanvas.GetComponent<MenuControl>().ShowOptions();
+        gm.MenuCanvas.GetComponent<MenuControl>().ShowOptions(); 
     }
 
     public void ReturnClicked()
@@ -32,7 +33,7 @@ public class ButtonHandler : MonoBehaviour
         gm.ShowMenu();
     }
 
-    public void ExitClicked() => Application.Quit(); //Ignored in editor
+    public void ExitClicked() => Application.Quit(); // Ignored in editor
 
     public void MenuClicked() => gm.PauseGame();
 }
