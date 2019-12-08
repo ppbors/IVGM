@@ -10,8 +10,10 @@ public class AsteroidSpawn : MonoBehaviour
 
     private bool spawn;
     private bool freeze;
-    private const uint spawnSizeAsteroids = 500;
+    private const uint spawnSizeAsteroids = 400;
     private uint spawnCount = 0;
+    private uint spawnRate = 1; // Asteroids spawn per second
+
     private void Start()
     {
         spawn = false;
@@ -20,11 +22,12 @@ public class AsteroidSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (!freeze && spawn && spawnCount < spawnSizeAsteroids)
+        if (spawn )
         {
-            SpawnAsteroids(1);
-            spawnCount += 1;
-            //spawnCount += x
+            SpawnAsteroids(spawnRate);
+            spawnCount += spawnRate;
+            if (spawnCount > spawnSizeAsteroids)
+                spawn = false;
         }
 
     }
@@ -35,11 +38,12 @@ public class AsteroidSpawn : MonoBehaviour
             spawn = true;        
     }
 
+    /*
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == player && spawn)
             spawn = false;
-    }
+    }*/
 
 
     // Spawns random asteroids in the entirety of the world at random places 

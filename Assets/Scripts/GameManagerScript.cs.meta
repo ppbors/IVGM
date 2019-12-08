@@ -3,7 +3,14 @@ guid: c9c9523a16d7aa546891243dd7ef926d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - MenuCanvas: {instanceID: 0}
+  - GameCanvas: {instanceID: 0}
+  - Player: {instanceID: 0}
+  - AsteroidSpawn: {instanceID: 0}
+  - countdown: {instanceID: 0}
+  - EnemyPrefab: {fileID: 2702977146897374164, guid: 54f5d00d4f3e55349a12d1a80920e803,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

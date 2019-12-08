@@ -14,6 +14,8 @@ public class GameManagerScript : MonoBehaviour
     public AsteroidSpawn AsteroidSpawn;
     public Countdown countdown;
 
+    public GameObject EnemyPrefab; /* dummy */
+
     //private List <GameObject> Asteroids;
     //public GameObject[] AsteroidPrefabs;
 
@@ -43,8 +45,9 @@ public class GameManagerScript : MonoBehaviour
             // Initialize player object: start thrusters
             Player.ThrusterPlay();
 
-            //SpawnAsteroids(spawnSizeAsteroids);
-            //countdown.startCountdown();
+            GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
+//          SpawnAsteroids(spawnSizeAsteroids);
+//          countdown.startCountdown();
         }
         else 
         {

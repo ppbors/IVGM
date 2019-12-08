@@ -73,7 +73,7 @@ public class AsteroidBehavior : MonoBehaviour
 
     // Change size of Asteroid
     // Destroy when one scale < 1
-    private void ChangeSize()
+    public void ChangeSize()
     {
         x_Scale -= 1.0f;
         y_Scale -= 1.0f;
@@ -86,11 +86,12 @@ public class AsteroidBehavior : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    
+   /* private void OnCollisionEnter(Collision collision)
     {
         // Change size when impacted by laser
-        if (collision.gameObject.name.Contains("laser"))
+        if (collision.gameObject.)
             ChangeSize();
-    }
+    }*/
   
 }

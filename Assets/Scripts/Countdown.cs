@@ -10,6 +10,7 @@ public class Countdown : MonoBehaviour
     private int timeLeft = 3;
     public TextMeshProUGUI countdown;
     private bool started = false;
+    private bool stopped = false;
 
     void Start()
     {
@@ -21,13 +22,21 @@ public class Countdown : MonoBehaviour
         if (started)
             countdown.text = ("" + timeLeft);
         if (timeLeft < 0)
+        {
             Destroy(gameObject);
+            stopped = true;
+        }
     }
 
     public void startCountdown()
     {
         started = true;
         StartCoroutine("LoseTime");
+    }
+
+    public bool finished()
+    {
+        return stopped;
     }
 
     private IEnumerator LoseTime()
