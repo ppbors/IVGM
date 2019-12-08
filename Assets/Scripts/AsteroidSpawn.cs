@@ -35,15 +35,15 @@ public class AsteroidSpawn : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player && !spawn)
-            spawn = true;        
+            spawn = true;
+        
     }
 
-    /*
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == player && spawn)
-            spawn = false;
-    }*/
+        if (other.gameObject.name.Contains("Asteroid"))
+            Destroy(other.gameObject);
+    }
 
 
     // Spawns random asteroids in the entirety of the world at random places 
