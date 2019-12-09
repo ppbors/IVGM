@@ -89,7 +89,8 @@ GameObject:
   - component: {fileID: 446090}
   - component: {fileID: 5499024}
   - component: {fileID: 11421226}
-  - component: {fileID: 3491383630954739214}
+  - component: {fileID: 3793384002127338394}
+  - component: {fileID: 633501324444214039}
   m_Layer: 0
   m_Name: Asteroid 2
   m_TagString: Enemy
@@ -141,8 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tumble: 0.25
---- !u!65 &3491383630954739214
-BoxCollider:
+--- !u!136 &3793384002127338394
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -151,9 +152,24 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 3.302297, z: 2.282175}
-  m_Center: {x: 0, y: 0.21743417, z: 0.01315093}
+  m_Radius: 0.7013442
+  m_Height: 3.5484807
+  m_Direction: 1
+  m_Center: {x: 0.21094523, y: 0.26753864, z: 0.46039915}
+--- !u!136 &633501324444214039
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141316}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7415741
+  m_Height: 3.2599866
+  m_Direction: 1
+  m_Center: {x: 0.12941943, y: 0.20330468, z: -0.49107534}
 --- !u!1 &146874
 GameObject:
   m_ObjectHideFlags: 0
