@@ -45,7 +45,7 @@ public class GameManagerScript : MonoBehaviour
             // Initialize player object: start thrusters
             Player.ThrusterPlay();
 
-            GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
+            //GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
 //          SpawnAsteroids(spawnSizeAsteroids);
 //          countdown.startCountdown();
         }
@@ -56,7 +56,6 @@ public class GameManagerScript : MonoBehaviour
 
         // Start game time
         Time.timeScale = 1;
-        AsteroidSpawn.FreezeAsteroids(false); // Continue spawning asteroids
         gamePaused = false;
     }
 

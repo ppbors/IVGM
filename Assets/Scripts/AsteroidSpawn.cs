@@ -58,7 +58,7 @@ public class AsteroidSpawn : MonoBehaviour
 
             position += transform.forward * 1000;
             GameObject asteroid = Instantiate(AsteroidPrefabs[Random.Range(0, 3)], position, Quaternion.identity);
-            //asteroid.transform.SetParent(this.gameObject.transform);
+            asteroid.transform.SetParent(this.gameObject.transform);
             asteroid.transform.LookAt(transform.forward * -1000);
             Asteroids.Add(asteroid);
         }
