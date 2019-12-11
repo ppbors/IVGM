@@ -17,7 +17,7 @@ public static class Boundary
 public class PlayerController : MonoBehaviour
 {
     public AsteroidSpawn AS;
-    public ParticleSystem exhaust;
+    public List<ParticleSystem> ExhaustList;
 
     private GameManagerScript gm;
     private Rigidbody rb;
@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
-        exhaust = GameObject.Find("Particle System").GetComponent<ParticleSystem>();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.mass = mass;
         rb.drag = drag;
@@ -134,40 +133,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ThrusterIntensify(bool on = true)
+    private void ThrusterIntensify(bool move = true)
     {
-        var main = exhaust.main;
-        main.startSpeed = on ? moveParticleSpeed : idleParticleSpeed;
-        main.startSize = on ? moveParticleScale : idleParticleScale;
+        foreach (ParticleSystem exhaust in ExhaustList)
+        {
+            var main = exhaust.main;
+            main.startSpeed = move ? moveParticleSpeed : idleParticleSpeed;
+            main.startSize = move ? moveParticleScale : idleParticleScale;
+        }
     }
 
     // Turns the thruster on/off
     public void ThrusterPlay(bool on = true)
     {
-        if (on && !exhaust.isPlaying)
+        foreach (ParticleSystem exhaust in ExhaustList)
         {
-            exhaust.Play();
-        }
-        else if (!on && (exhaust.isPlaying || exhaust.isPaused))
-        {
-            exhaust.Stop();
-        }
-        else // If play->play or stop->stop
-        {
-            Debug.Log("Invalid Toggle ThrusterPlay(...)");
+            if (on && !exhaust.isPlaying)
+            {
+                exhaust.Play();
+            }
+            else if (!on && (exhaust.isPlaying || exhaust.isPaused))
+            {
+                exhaust.Stop();
+            }
+            else // If play->play or stop->stop
+            {
+                Debug.Log("Invalid Toggle ThrusterPlay(...)");
+            }
         }
     }
 
     // Pauses the thruster
     public void ThrusterPause()
     {
-        if (exhaust.isPlaying)
+        foreach (ParticleSystem exhaust in ExhaustList)
         {
-            exhaust.Pause();
-        }
-        else // If not initialized / active
-        {
-            Debug.Log("Invalid Pausing ThrusterPause()");
+            if (exhaust.isPlaying)
+            {
+                exhaust.Pause();
+            }
+            else // If not initialized / active
+            {
+                Debug.Log("Invalid Pausing ThrusterPause()");
+            }
         }
     }
 }
