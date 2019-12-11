@@ -4923,7 +4923,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2702977146897374171}
-  - component: {fileID: 2702977146897374168}
   - component: {fileID: 2702977146897374169}
   - component: {fileID: 2702977146897374166}
   - component: {fileID: 2702977146897374167}
@@ -4950,21 +4949,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2702977146897374168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2702977146897374164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea38cb5f18905084f9b24e65cb2bc383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exhaust: {fileID: 2702977145680095673}
-  m_laserPrefab: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
-  player: {fileID: 0}
 --- !u!54 &2702977146897374169
 Rigidbody:
   m_ObjectHideFlags: 0
