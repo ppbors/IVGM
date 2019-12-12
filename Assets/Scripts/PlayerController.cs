@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
     void OnColisionEnter(Collision collision)
     {
         /* TODO: lose hp? */
+        Debug.Log("test");
     }
 
     public void Hide(bool on = true)
