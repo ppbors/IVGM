@@ -9,7 +9,7 @@ public class AsteroidSpawn : MonoBehaviour
     private List<GameObject> Asteroids;
 
     private bool spawn;
-    private bool freeze;
+    private bool pause;
     private const uint spawnSizeAsteroids = 400;
     private uint spawnCount = 0;
     private uint spawnRate = 1; // Asteroids spawn per second
@@ -22,7 +22,7 @@ public class AsteroidSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (spawn )
+        if (spawn && !pause)
         {
             SpawnAsteroids(spawnRate);
             spawnCount += spawnRate;
@@ -64,13 +64,9 @@ public class AsteroidSpawn : MonoBehaviour
         }
     }
 
-    public void FreezeAsteroids(bool on = true)
+    public void PauseSpawn(bool pause)
     {
-        freeze = on;
-
-        foreach (GameObject asteroid in Asteroids)
-        {
-            asteroid.GetComponent<AsteroidBehavior>().Freeze(on);
-        }
+        this.pause = pause;
     }
+
 }
