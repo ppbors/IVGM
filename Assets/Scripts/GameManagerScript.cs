@@ -43,7 +43,7 @@ public class GameManagerScript : MonoBehaviour
             gameRunning = true;
 
             // Initialize player object: start thrusters
-            Player.ThrusterPlay();
+            //Player.ThrusterPlay();
 
             //GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
 //          SpawnAsteroids(spawnSizeAsteroids);
@@ -53,10 +53,14 @@ public class GameManagerScript : MonoBehaviour
         {
             // Actions taken only when proceeding from paused game
         }
+        
 
         // Start game time
         Time.timeScale = 1;
         gamePaused = false;
+
+        // Enable spawning of new Asteroids
+        AsteroidSpawn.PauseSpawn(gamePaused);
     }
 
     // Stops game and returns to game menu
@@ -76,12 +80,13 @@ public class GameManagerScript : MonoBehaviour
         // Pause game time
         Time.timeScale = 0;
 
-        // Stop spawning new asteroids while game is paused
-        AsteroidSpawn.FreezeAsteroids();
         gamePaused = true;
+        
         ShowHUD(false);
         ShowMenu();
-        //CancelInvoke();
+
+        // Stop spawning new asteroids while game is paused
+        AsteroidSpawn.PauseSpawn(gamePaused);
     }
 
     public bool IsPaused() => gamePaused;

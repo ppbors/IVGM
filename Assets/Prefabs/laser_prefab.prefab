@@ -96,12 +96,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_templateMaterial: {fileID: 2100000, guid: f68f8c3a3d76fb74cbb880d372c81620, type: 2}
-  m_doNotOverwriteTemplateMaterialProperties: 1
+  m_doNotOverwriteTemplateMaterialProperties: 0
   m_startPos: {x: 0, y: 0, z: 0}
   m_endPos: {x: 0, y: 0, z: 50}
   m_lineColor: {r: 0, g: 1, b: 0.0075297356, a: 0}
   m_lineWidth: 66
-  m_lightSaberFactor: 0.747
+  m_lightSaberFactor: 0.931
 --- !u!114 &11468384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 2
-  m_Range: 300
+  m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -165,7 +165,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
