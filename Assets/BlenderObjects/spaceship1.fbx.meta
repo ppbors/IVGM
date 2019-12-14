@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 31d87546b2d82db4eb678a6d80cccd43
+guid: 5e8e36e952b7924458cd522a8c2b39ab
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
@@ -35,12 +35,12 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 2
-    addColliders: 1
+    meshCompression: 0
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
-    importBlendShapes: 0
+    importBlendShapes: 1
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
@@ -58,7 +58,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
