@@ -10,7 +10,7 @@ public class AsteroidSpawn : MonoBehaviour
 
     private bool spawn;
     private bool pause;
-    private const uint spawnSizeAsteroids = 400;
+    private const uint spawnSizeAsteroids = 200;
     private uint spawnCount = 0;
     private uint spawnRate = 1; // Asteroids spawn per second
 
