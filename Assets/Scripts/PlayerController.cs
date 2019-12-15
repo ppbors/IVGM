@@ -45,11 +45,11 @@ public class PlayerController : MonoBehaviour
 
     private float yaw = 0.0f;    /* left/right yaw */
     private float pitch = 0.0f;  /* up/down pitch */
-    private float tilt = 3.0f;   /* left/right tilt */
+    private float tilt = 0.0f;   /* left/right tilt */
 
     private readonly float speedH = 1.0f; /* speed for yaw */
     private readonly float speedV = 1.0f; /* speed for pitch */
-    private readonly float speedZ = 1.0f; /* speed for tilt */
+    private readonly float speedZ = 0.2f; /* speed for tilt */
     /* --- */
 
     void FixedUpdate()
@@ -64,6 +64,8 @@ public class PlayerController : MonoBehaviour
         yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");
         tilt += speedZ * moveHorizontal;
+
+        tilt = Mathf.Clamp(tilt, -100f, 100f);
 
         /* It should add thrust to where the ship is facing */
         Vector3 movement = new Vector3(yaw,             /* Left / right */
@@ -82,8 +84,9 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(rb.position.y, Boundary.yMin, Boundary.yMax),
             Mathf.Clamp(rb.position.z, Boundary.zMin, Boundary.zMax)
         );
-
+        
         transform.Rotate(new Vector3(pitch, yaw, -tilt) * controlSpeed * Time.deltaTime);
+        
     }
     
 
@@ -94,12 +97,18 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         rb.mass = mass;
         rb.drag = drag;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
        
+    }
+
+    public Vector3 GetCoordinates()
+    {
+        return transform.position;
     }
 
     void OnColisionEnter(Collision collision)

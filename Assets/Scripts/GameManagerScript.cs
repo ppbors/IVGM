@@ -13,11 +13,11 @@ public class GameManagerScript : MonoBehaviour
     public PlayerController Player;
     public AsteroidSpawn AsteroidSpawn;
     public Countdown countdown;
+    public WifiAnimation wifi;
+
+    public BossEncounter be;
 
     public GameObject EnemyPrefab; /* dummy */
-
-    //private List <GameObject> Asteroids;
-    //public GameObject[] AsteroidPrefabs;
 
     private bool menuShown; // If menu is shown
     private bool gameRunning; //If game has started
@@ -25,6 +25,8 @@ public class GameManagerScript : MonoBehaviour
 
     private const int x_Res = 1024;
     private const int y_Res = 576;
+
+    int gamestate = 0; // 1 = in 1st boss battle, 2 = after 1st boss battle, 3 = in 2nd boss battle, 4 = after 2nd boss battle, 5 = in last boss battle
 
     
 
@@ -41,13 +43,19 @@ public class GameManagerScript : MonoBehaviour
         {
             Player.Hide(false);
             gameRunning = true;
+            
+
+            be = Instantiate(be, new Vector3(0, 0, 3000), Quaternion.identity).GetComponent<BossEncounter>();
+            be.SpawnBoss(0); // The first boss
+
+            wifi.reset(Player.GetCoordinates());
 
             // Initialize player object: start thrusters
             //Player.ThrusterPlay();
 
             //GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
-//          SpawnAsteroids(spawnSizeAsteroids);
-//          countdown.startCountdown();
+            //          SpawnAsteroids(spawnSizeAsteroids);
+            //          countdown.startCountdown();
         }
         else 
         {
@@ -61,6 +69,11 @@ public class GameManagerScript : MonoBehaviour
 
         // Enable spawning of new Asteroids
         AsteroidSpawn.PauseSpawn(gamePaused);
+    }
+
+    public void HandleBossDefeat() // Should be called by boss object after destruction
+    {
+        // Based on the current game state, determine what to do
     }
 
     // Stops game and returns to game menu
@@ -127,11 +140,27 @@ public class GameManagerScript : MonoBehaviour
         // Open/close menu with 'm' key
         if(Input.GetKeyDown("m"))
         {
-            if(menuShown)
+            if (menuShown)
                 StartGame();
             else
                 PauseGame();
         }
+    }
+
+    public Vector3 GetCurrentSignalSource()
+    {
+        GameObject go = GameObject.Find("BossEnvironment");
+
+        if (!go)
+            return new Vector3(0, 0, 0); // Very short boss to boss transition
+
+        BossEncounter be = go.GetComponent<BossEncounter>();
+        return be.GetCoordinates();
+    }
+
+    public Vector3 GetPlayerCoordinates()
+    {
+        return Player.GetCoordinates();
     }
 
 }

@@ -8,9 +8,11 @@ public class WifiAnimation : MonoBehaviour
 {
     public Sprite[] sprites;
     private Image wifiIcon;
+    public GameManagerScript gm;
 
-    /*  WifiAnimation wa = (WifiAnimation)GameObject.Find("WifiIcon").GetComponent(typeof(WifiAnimation));
-     *  wa.SetSignalStrength(Random.Range(0, 5)); */
+    private Vector3 initialPosition;
+    private float barTreshold;
+
     public void SetSignalStrength(int Strength)
     {
         wifiIcon.sprite = sprites[Strength];
@@ -21,12 +23,26 @@ public class WifiAnimation : MonoBehaviour
     {
         GameObject go = GameObject.Find("WifiIcon");
         wifiIcon = go.GetComponent<Image>();
+
+        initialPosition = new Vector3();
+    }
+
+    public void reset(Vector3 pos) // Should be called after every signal change
+    {
+        initialPosition = pos;
+        barTreshold = Vector3.Distance(gm.GetCurrentSignalSource(), initialPosition);
+
+        if (barTreshold != 0)
+            barTreshold /= 5;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.frameCount % 60==0)
-            SetSignalStrength(Random.Range(0, 5));
+        float distance = Vector3.Distance(gm.GetCurrentSignalSource(), gm.GetPlayerCoordinates()) / barTreshold;
+        Debug.Log(Vector3.Distance(gm.GetCurrentSignalSource(), gm.GetPlayerCoordinates()));
+        SetSignalStrength(Mathf.Abs(Mathf.Clamp((int) distance, 0, 4) - 5));
+
+        
     }
 }

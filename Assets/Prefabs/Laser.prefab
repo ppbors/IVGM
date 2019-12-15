@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8875538428065890532}
   - component: {fileID: -6528892658869046929}
   m_Layer: 0
-  m_Name: laser_prefab
+  m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
