@@ -9,13 +9,9 @@ public class ScrollHandler : MonoBehaviour
     public GameManagerScript GameManager;
     public Text ScrollingText;
 
-    private bool isScrolling; // We'll use this for debugging
+    private bool isScrolling; // extra check to not scroll while Start is not called
     private float rotation;   // Default 55deg, but read in from canvas
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
     public void StartScroll()
     {
@@ -33,9 +29,6 @@ public class ScrollHandler : MonoBehaviour
         {
             Vector3 _currentUIPosition = gameObject.transform.position;
 
-            // Get the current transform position of the panel
-            //Debug.Log("Current Positon: " + _currentUIPosition);
-
             // Increment the Y value of the panel 
             Vector3 _incrementYPosition =
               new Vector3(_currentUIPosition.x,
@@ -43,15 +36,17 @@ public class ScrollHandler : MonoBehaviour
                           _currentUIPosition.z + 0.15f);
 
             // Change the transform position to the new one
-            Debug.Log("New Position: " + _incrementYPosition);
             gameObject.transform.position = _incrementYPosition;
 
+            // start fade when z > 450 (hardcoded)
             if (_currentUIPosition.z > 450)
             {
                 Color x = ScrollingText.color;
                 x.a -= 0.01f;
                 ScrollingText.color = x;
 
+                
+                // Start game when text is transparent
                 if(x.a <= 0f)
                 {
                     this.gameObject.SetActive(false);
@@ -60,9 +55,6 @@ public class ScrollHandler : MonoBehaviour
                     
             }
         }
-
-       
-            //startFade();
     }
 
     // Set up the initial variables
