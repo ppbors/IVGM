@@ -50,12 +50,9 @@ public class GameManagerScript : MonoBehaviour
 
             wifi.reset(Player.GetCoordinates());
 
-            // Initialize player object: start thrusters
-            //Player.ThrusterPlay();
 
             //GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
-            //          SpawnAsteroids(spawnSizeAsteroids);
-            //          countdown.startCountdown();
+            // countdown.startCountdown();
         }
         else 
         {
@@ -105,6 +102,13 @@ public class GameManagerScript : MonoBehaviour
     public bool IsPaused() => gamePaused;
     public bool IsRunning() => gameRunning;
 
+    public void ShowMenuChildren(bool enabled = true)
+    {
+        foreach(Transform child in MenuCanvas.transform)
+        {
+            child.gameObject.SetActive(enabled);
+        }
+    }
 
     // Enable/disable menu rendering
     public void ShowMenu(bool enabled = true)

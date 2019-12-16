@@ -20,7 +20,7 @@ public class Health4GHandler : MonoBehaviour
 
     public void DecreaseAutomatically()
     {
-        ChangeHealth(-1);
+        ChangeHealth(-10);
     }
 
     public void ChangeHealth(int amount)
