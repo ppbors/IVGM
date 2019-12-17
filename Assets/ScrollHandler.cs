@@ -24,22 +24,28 @@ public class ScrollHandler : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetKeyDown("z")){
+            this.gameObject.SetActive(false);
+            GameManager.StartGame();
+        }
+
+
         // If we are scrolling, perform update action
         if (isScrolling)
         {
-            Vector3 _currentUIPosition = gameObject.transform.position;
+            Vector3 _currentUIPosition = ScrollingText.transform.position;
 
             // Increment the Y value of the panel 
             Vector3 _incrementYPosition =
               new Vector3(_currentUIPosition.x,
                           _currentUIPosition.y,
-                          _currentUIPosition.z + 0.15f);
+                          _currentUIPosition.z + 0.2f);
 
             // Change the transform position to the new one
-            gameObject.transform.position = _incrementYPosition;
+            ScrollingText.transform.position = _incrementYPosition;
 
             // start fade when z > 450 (hardcoded)
-            if (_currentUIPosition.z > 450)
+            if (_currentUIPosition.z > 430)
             {
                 Color x = ScrollingText.color;
                 x.a -= 0.01f;
@@ -64,7 +70,6 @@ public class ScrollHandler : MonoBehaviour
 
         isScrolling = true;
         rotation = gameObject.GetComponentInParent<Transform>().eulerAngles.x;
-        Debug.Log("Parent rotation: " + rotation);
     }
 
 

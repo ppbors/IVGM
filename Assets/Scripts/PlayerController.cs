@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     private float pitch = 0.0f;  /* up/down pitch */
     private float tilt = 0.0f;   /* left/right tilt */
 
+    private float health;
+
     private readonly float speedH = 1.0f; /* speed for yaw */
     private readonly float speedV = 1.0f; /* speed for pitch */
     private readonly float speedZ = 0.2f; /* speed for tilt */
@@ -97,7 +99,9 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         rb.mass = mass;
         rb.drag = drag;
-        
+        health = 100;
+        InvokeRepeating("HealthDecreaseAutomatically", 1, 1);
+
     }
 
     // Update is called once per frame
@@ -111,11 +115,29 @@ public class PlayerController : MonoBehaviour
         return transform.position;
     }
 
-    void OnColisionEnter(Collision collision)
+    private void HealthDecreaseAutomatically()
     {
-        /* TODO: lose hp? */
-        Debug.Log("test");
+        AddHealth(-1);
     }
+
+    public float getHealth()
+    {
+        return health;
+    }
+
+    public void AddHealth(float amount)
+    {
+        health += amount;
+        // clamp health between 0 and 100
+        health = (health < 0) ? 0 : (health > 100) ? 100 : health;
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        AddHealth(-5);
+    }
+
 
     public void Hide(bool on = true)
     {

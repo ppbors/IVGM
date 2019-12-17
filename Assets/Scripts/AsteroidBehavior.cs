@@ -3,8 +3,10 @@ using System.Collections;
 
 public class AsteroidBehavior : MonoBehaviour
 {
+   
     public float tumble;
 
+    private GameManagerScript gameManager;
     private Rigidbody rb;
     private Vector3 angularVelocity;
     private Vector3 normalVelocity;
@@ -13,6 +15,7 @@ public class AsteroidBehavior : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         rb = gameObject.GetComponent<Rigidbody>();
 
         angularVelocity = Vector3.zero;
@@ -80,18 +83,13 @@ public class AsteroidBehavior : MonoBehaviour
         z_Scale -= 1.0f;
 
         if (x_Scale <= 1 || y_Scale <= 1 || z_Scale <= 1)
+        {
+            gameManager.AsteroidDestroyed();
             Destroy(gameObject);
+        }
 
         transform.localScale = new Vector3(x_Scale, y_Scale, z_Scale);
 
     }
-
-    
-   /* private void OnCollisionEnter(Collision collision)
-    {
-        // Change size when impacted by laser
-        if (collision.gameObject.)
-            ChangeSize();
-    }*/
   
 }

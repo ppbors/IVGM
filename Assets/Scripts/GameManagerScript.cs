@@ -68,6 +68,11 @@ public class GameManagerScript : MonoBehaviour
         AsteroidSpawn.PauseSpawn(gamePaused);
     }
 
+    public void AsteroidDestroyed()
+    {
+        Player.AddHealth(10.0f);
+    }
+
     public void HandleBossDefeat() // Should be called by boss object after destruction
     {
         // Based on the current game state, determine what to do
@@ -106,7 +111,8 @@ public class GameManagerScript : MonoBehaviour
     {
         foreach(Transform child in MenuCanvas.transform)
         {
-            child.gameObject.SetActive(enabled);
+            if(!child.gameObject.name.Contains("Story"))
+                child.gameObject.SetActive(enabled);
         }
     }
 
@@ -114,6 +120,7 @@ public class GameManagerScript : MonoBehaviour
     public void ShowMenu(bool enabled = true)
     {
         MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gamePaused ? "Continue" : "Start";
+        ShowMenuChildren(enabled);
         MenuCanvas.gameObject.SetActive(enabled);
         menuShown = enabled;
         Cursor.visible = enabled;
