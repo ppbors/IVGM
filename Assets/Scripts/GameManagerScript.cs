@@ -25,10 +25,11 @@ public class GameManagerScript : MonoBehaviour
 
     private const int x_Res = 1024;
     private const int y_Res = 576;
+    private BossEncounter be2;
 
     int gamestate = 0; // 1 = in 1st boss battle, 2 = after 1st boss battle, 3 = in 2nd boss battle, 4 = after 2nd boss battle, 5 = in last boss battle
 
-    
+    bool bossDead = false;
 
     //Init game here, runs when start button is clicked
     public void StartGame()
@@ -43,16 +44,16 @@ public class GameManagerScript : MonoBehaviour
         {
             Player.Hide(false);
             gameRunning = true;
-            
 
-            be = Instantiate(be, new Vector3(0, 0, 3000), Quaternion.identity).GetComponent<BossEncounter>();
-            be.SpawnBoss(0); // The first boss
+
+            be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
+            be2.SpawnBoss(0); // The first boss
 
             wifi.reset(Player.GetCoordinates());
 
 
             //GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
-            // countdown.startCountdown();
+            countdown.startCountdown();
         }
         else 
         {
@@ -75,7 +76,16 @@ public class GameManagerScript : MonoBehaviour
 
     public void HandleBossDefeat() // Should be called by boss object after destruction
     {
-        // Based on the current game state, determine what to do
+        if (!bossDead)
+        {
+            Destroy(be2.gameObject);
+            // Based on the current game state, determine what to do
+            be2 = Instantiate(be, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BossEncounter>();
+            be2.SpawnBoss(1); // The first boss
+
+            wifi.reset(Player.GetCoordinates());
+            bossDead = true;
+        }
     }
 
     // Stops game and returns to game menu
@@ -145,9 +155,11 @@ public class GameManagerScript : MonoBehaviour
         ShowMenu();
     }
 
+
     // Update is called once per frame
     void Update()
     {
+        
         // Open/close menu with 'm' key
         if(Input.GetKeyDown("m"))
         {
@@ -158,15 +170,15 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    public Vector3 GetCurrentSignalSource()
+    public Vector3 GetCurrentSignalSource(GameObject go)
     {
-        GameObject go = GameObject.Find("BossEnvironment");
+        //GameObject go = GameObject.Find("BossEnvironment");
 
         if (!go)
             return new Vector3(0, 0, 0); // Very short boss to boss transition
 
-        BossEncounter be = go.GetComponent<BossEncounter>();
-        return be.GetCoordinates();
+        //BossEncounter be2 = go.GetComponent<BossEncounter>();
+        return be2.GetCoordinates();
     }
 
     public Vector3 GetPlayerCoordinates()

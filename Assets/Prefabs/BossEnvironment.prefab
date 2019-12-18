@@ -59,4 +59,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BossModels:
   - {fileID: 6210855867966581291, guid: ea433c5d2dfbcfe40aa895955beafc73, type: 3}
+  - {fileID: 3250827061505378083, guid: 325e207f54d044dce9679cb0b27a7035, type: 3}
   gm: {fileID: 0}

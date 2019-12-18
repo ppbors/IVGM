@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class EnemyControl : MonoBehaviour
 {
+    public float sizeLaser;
     private Rigidbody rb;
     public ParticleSystem exhaust;
+
+    public List<CannonBehavior> cannon;
     public GameObject m_laserPrefab;
 
     private GameManagerScript gm;
@@ -22,11 +25,11 @@ public class EnemyControl : MonoBehaviour
 
     /* Enemy distance trigger constants */
     private readonly float maxDist = 200.0f;
-    private readonly float fireDist = 100.0f;
+    private readonly float fireDist = 1000.0f;
     /* --- */
 
     private bool cannonOnCooldown = true;
-    private float fireRate = 3.0f; 
+    private float fireRate = 5.0f; 
 
     /* Enemy rigidbody constants */
     private readonly float mass = 10.0f;
@@ -40,6 +43,8 @@ public class EnemyControl : MonoBehaviour
     private readonly float moveParticleScale = 2.0f;
     /* --- */
 
+    int health = 100;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +54,7 @@ public class EnemyControl : MonoBehaviour
         rb.mass = mass;
         rb.drag = drag;
 
+        transform.LookAt(player.transform);
         StartCoroutine(CoolDown());
     }
 
@@ -78,6 +84,8 @@ public class EnemyControl : MonoBehaviour
         {
             // Idle state: do nothing?
         }
+        if (health <= 0)
+            gm.HandleBossDefeat();
     }
 
     private void RotateTowardsPlayer()
@@ -115,14 +123,18 @@ public class EnemyControl : MonoBehaviour
         cannonOnCooldown = false;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("COLLISION");
+        if (collision.gameObject.name.Contains("Laser"))
+            health -= 10;
+    }
     private void Fire()
     {
         // Instantiate laser, spawn slightly in front
         cannonOnCooldown = true;
-        GameObject go = GameObject.Instantiate(m_laserPrefab, transform.position + transform.forward * 20, transform.rotation) as GameObject;
+        cannon[Random.Range(0, cannon.Count)].Fire(sizeLaser);
         StartCoroutine(CoolDown());
         
-        // Destroys itself after 3seconds
-        GameObject.Destroy(go, 3f);
     }
 }

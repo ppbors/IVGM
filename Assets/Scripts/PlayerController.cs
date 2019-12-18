@@ -17,6 +17,7 @@ public static class Boundary
 public class PlayerController : MonoBehaviour
 {
     public AsteroidSpawn AS;
+    public List<CannonBehavior> cannons;
     public List<ParticleSystem> ExhaustList;
 
     private GameManagerScript gm;
@@ -88,9 +89,11 @@ public class PlayerController : MonoBehaviour
         );
         
         transform.Rotate(new Vector3(pitch, yaw, -tilt) * controlSpeed * Time.deltaTime);
-        
+
+       
     }
     
+
 
     // Start is called before the first frame update
     void Start()
@@ -107,7 +110,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        // Shoot laser when SPACE or left-mouse button is pressed
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        {
+            // Instantiate laser
+            cannons[Random.Range(0, 2)].Fire(1);
+        }
     }
 
     public Vector3 GetCoordinates()

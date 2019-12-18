@@ -30,6 +30,7 @@ public class BossEncounter : MonoBehaviour
 
         boss = Instantiate(BossModels[i], GetCoordinates(), Quaternion.identity).GetComponent<EnemyControl>();
         boss.transform.LookAt(gm.GetPlayerCoordinates());
+        boss.transform.SetParent(gameObject.transform);
     }
 
     public Vector3 GetCoordinates()

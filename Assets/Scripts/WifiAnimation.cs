@@ -30,8 +30,9 @@ public class WifiAnimation : MonoBehaviour
     public void reset(Vector3 pos) // Should be called after every signal change
     {
         initialPosition = pos;
-        barTreshold = Vector3.Distance(gm.GetCurrentSignalSource(), initialPosition);
-
+        // todo Finetuning?
+        barTreshold = Vector3.Distance(gm.GetCurrentSignalSource(this.gameObject), initialPosition) - 200 ;
+        
         if (barTreshold != 0)
             barTreshold /= 5;
     }
@@ -39,8 +40,10 @@ public class WifiAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(gm.GetCurrentSignalSource(), gm.GetPlayerCoordinates()) / barTreshold;
-        //Debug.Log(Vector3.Distance(gm.GetCurrentSignalSource(), gm.GetPlayerCoordinates()));
+        Debug.Log(gm.GetCurrentSignalSource(this.gameObject));
+        float distance = Vector3.Distance(gm.GetCurrentSignalSource(this.gameObject), gm.GetPlayerCoordinates()) / barTreshold;
+       
+        Debug.Log(Vector3.Distance(gm.GetCurrentSignalSource(this.gameObject), gm.GetPlayerCoordinates()));
         SetSignalStrength(Mathf.Abs(Mathf.Clamp((int) distance, 0, 4) - 5));
 
         

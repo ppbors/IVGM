@@ -4,24 +4,20 @@ using System.Collections;
 public class CannonBehavior : MonoBehaviour {
 
     public GameObject m_laserPrefab;
-    public GameManagerScript gm;
+   // public GameManagerScript gm;
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void Fire(float size)
     {
-        // Do not shoot laser when game is paused
-        if(gm.IsPaused() || !gm.IsRunning())
-        {
-            return;
-        }
-        // Shoot laser when SPACE or left-mouse button is pressed
-        else if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) 
-		{
-            // Instantiate laser
-			GameObject go = GameObject.Instantiate(m_laserPrefab, transform.position, transform.rotation) as GameObject;
+     
+        GameObject go = GameObject.Instantiate(m_laserPrefab, transform.position, transform.rotation) as GameObject;
+        go.transform.localScale = new Vector3(go.transform.localScale.x * size, go.transform.localScale.y * size,
+            go.transform.localScale.z * (size/10)) ;
 
-            // Destroys itself after 3 seconds
-            GameObject.Destroy(go, 3f);
-		}
-	}
+        // Destroys itself after 3 seconds
+        GameObject.Destroy(go, 3f);
+    }
+
+ 
 }
