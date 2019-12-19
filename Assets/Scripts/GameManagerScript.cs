@@ -22,16 +22,24 @@ public class GameManagerScript : MonoBehaviour
     private bool isMenuShown; // If menu is shown
     private bool isGameRunning; //If game has started
     private bool isGamePaused; // If game is paused
+    private bool isGameLost;
+    private bool isGameWon;
 
     private const int x_Res = 1024;
     private const int y_Res = 576;
     private BossEncounter be2;
 
-    int gamestate = 0; // 1 = in 1st boss battle, 2 = after 1st boss battle, 3 = in 2nd boss battle, 4 = after 2nd boss battle, 5 = in last boss battle
+    // 1 = in 1st boss battle
+    // 2 = after 1st boss battle
+    // 3 = in 2nd boss battle
+    // 4 = after 2nd boss battle
+    // 5 = in last boss battle
+    int gameState = 0; 
 
     bool bossDead = false;
 
-    //Init game here, runs when start button is clicked
+
+    // Initialize game here, runs when Start button is clicked
     public void StartGame()
     {
         ShowMenu(false);
@@ -44,7 +52,8 @@ public class GameManagerScript : MonoBehaviour
         {
             Player.Hide(false);
             isGameRunning = true;
-
+            isGameLost = false;
+            isGameWon = false;
 
             be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
             be2.SpawnBoss(0); // The first boss
@@ -69,16 +78,19 @@ public class GameManagerScript : MonoBehaviour
         AsteroidSpawn.PauseSpawn(isGamePaused);
     }
 
+
     public void AsteroidDestroyed()
     {
         Player.AddHealth(10.0f);
     }
+
 
     public void HandleBossDefeat() // Should be called by boss object after destruction
     {
         if (!bossDead)
         {
             Destroy(be2.gameObject);
+
             // Based on the current game state, determine what to do
             be2 = Instantiate(be, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BossEncounter>();
             be2.SpawnBoss(1); // The first boss
@@ -88,16 +100,59 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    // Stops game and returns to game menu
+
+    // Called when game is won
+    private void WonGame()
+    {
+        isGameWon = true;
+        StopGame();
+
+        // TODO: Show "Won" screen
+
+        // Show game menu
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
+        ShowMenuChildren(enabled);
+        MenuCanvas.gameObject.SetActive(enabled);
+        isMenuShown = enabled;
+        Cursor.visible = enabled;
+    }
+
+
+    // Called when game is lost
+    private void LostGame()
+    {
+        isGameLost = true;
+        StopGame();
+
+        // TODO: Show "Lost" screen
+
+        // Show game menu
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
+        ShowMenuChildren(enabled);
+        MenuCanvas.gameObject.SetActive(enabled);
+        isMenuShown = enabled;
+        Cursor.visible = enabled;
+    }
+
+
+    // Stops game and resets game params
     public void StopGame()
     {
         isGameRunning = false;
 
-        // Stopping of the game, a.k.a reset
-        // Reset game params
-        // Show start menu
+        AsteroidSpawn.PauseSpawn(true);
         Time.timeScale = 0; // Pause game time
+        
+        Player.Hide(true);
+        isGameRunning = false;
+        isGamePaused = true;
+
+        be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
+        be2.SpawnBoss(0); // The first boss
+
+        wifi.reset(Player.GetCoordinates());
     }
+
 
     // Paused game state, opens menu by default
     public void PauseGame()
@@ -114,6 +169,7 @@ public class GameManagerScript : MonoBehaviour
         AsteroidSpawn.PauseSpawn(isGamePaused);
     }
 
+
     public bool IsPaused() => isGamePaused;
     public bool IsRunning() => isGameRunning;
 
@@ -126,6 +182,7 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+
     // Enable/disable menu rendering
     public void ShowMenu(bool enabled = true)
     {
@@ -136,11 +193,13 @@ public class GameManagerScript : MonoBehaviour
         Cursor.visible = enabled;
     }
 
+
     // Enable/disable HUD rendering
     private void ShowHUD(bool enabled = true)
     {
         GameCanvas.gameObject.SetActive(enabled);
     }
+
 
     // Start is called before the first frame update
     void Start()
