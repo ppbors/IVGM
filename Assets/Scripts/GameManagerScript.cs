@@ -19,9 +19,9 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject EnemyPrefab; /* dummy */
 
-    private bool menuShown; // If menu is shown
-    private bool gameRunning; //If game has started
-    private bool gamePaused; // If game is paused
+    private bool isMenuShown; // If menu is shown
+    private bool isGameRunning; //If game has started
+    private bool isGamePaused; // If game is paused
 
     private const int x_Res = 1024;
     private const int y_Res = 576;
@@ -40,10 +40,10 @@ public class GameManagerScript : MonoBehaviour
         ShowHUD();
 
         // Only toggle ship appearance at start
-        if (!gameRunning) // Specific actions taken at new game
+        if (!isGameRunning) // Specific actions taken at new game
         {
             Player.Hide(false);
-            gameRunning = true;
+            isGameRunning = true;
 
 
             be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
@@ -63,10 +63,10 @@ public class GameManagerScript : MonoBehaviour
 
         // Start game time
         Time.timeScale = 1;
-        gamePaused = false;
+        isGamePaused = false;
 
         // Enable spawning of new Asteroids
-        AsteroidSpawn.PauseSpawn(gamePaused);
+        AsteroidSpawn.PauseSpawn(isGamePaused);
     }
 
     public void AsteroidDestroyed()
@@ -91,7 +91,7 @@ public class GameManagerScript : MonoBehaviour
     // Stops game and returns to game menu
     public void StopGame()
     {
-        gameRunning = false;
+        isGameRunning = false;
 
         // Stopping of the game, a.k.a reset
         // Reset game params
@@ -105,17 +105,17 @@ public class GameManagerScript : MonoBehaviour
         // Pause game time
         Time.timeScale = 0;
 
-        gamePaused = true;
+        isGamePaused = true;
         
         ShowHUD(false);
         ShowMenu();
 
         // Stop spawning new asteroids while game is paused
-        AsteroidSpawn.PauseSpawn(gamePaused);
+        AsteroidSpawn.PauseSpawn(isGamePaused);
     }
 
-    public bool IsPaused() => gamePaused;
-    public bool IsRunning() => gameRunning;
+    public bool IsPaused() => isGamePaused;
+    public bool IsRunning() => isGameRunning;
 
     public void ShowMenuChildren(bool enabled = true)
     {
@@ -129,10 +129,10 @@ public class GameManagerScript : MonoBehaviour
     // Enable/disable menu rendering
     public void ShowMenu(bool enabled = true)
     {
-        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gamePaused ? "Continue" : "Start";
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = isGamePaused ? "Continue" : "Start";
         ShowMenuChildren(enabled);
         MenuCanvas.gameObject.SetActive(enabled);
-        menuShown = enabled;
+        isMenuShown = enabled;
         Cursor.visible = enabled;
     }
 
@@ -147,8 +147,8 @@ public class GameManagerScript : MonoBehaviour
     {
         // Set to specified resolution
         Screen.SetResolution(x_Res, y_Res, true);
-        gameRunning = false;
-        gamePaused = false;
+        isGameRunning = false;
+        isGamePaused = false;
 
         //Asteroids = new List<GameObject>();
         Player.Hide();
@@ -163,7 +163,7 @@ public class GameManagerScript : MonoBehaviour
         // Open/close menu with 'm' key
         if(Input.GetKeyDown("m"))
         {
-            if (menuShown)
+            if (isMenuShown)
                 StartGame();
             else
                 PauseGame();
