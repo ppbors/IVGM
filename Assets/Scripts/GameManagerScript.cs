@@ -9,6 +9,7 @@ public class GameManagerScript : MonoBehaviour
 {
     public Canvas MenuCanvas;
     public Canvas GameCanvas;
+    public Canvas EndScreenCanvas;
 
     public PlayerController Player;
     public AsteroidSpawn AsteroidSpawn;
@@ -19,19 +20,27 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject EnemyPrefab; /* dummy */
 
-    private bool menuShown; // If menu is shown
-    private bool gameRunning; //If game has started
-    private bool gamePaused; // If game is paused
+    private bool isMenuShown; // If menu is shown
+    private bool isGameRunning; //If game has started
+    private bool isGamePaused; // If game is paused
+    private bool isGameLost;
+    private bool isGameWon;
 
     private const int x_Res = 1024;
     private const int y_Res = 576;
     private BossEncounter be2;
 
-    int gamestate = 0; // 1 = in 1st boss battle, 2 = after 1st boss battle, 3 = in 2nd boss battle, 4 = after 2nd boss battle, 5 = in last boss battle
+    // 1 = in 1st boss battle
+    // 2 = after 1st boss battle
+    // 3 = in 2nd boss battle
+    // 4 = after 2nd boss battle
+    // 5 = in last boss battle
+    int gameState = 0; 
 
     bool bossDead = false;
 
-    //Init game here, runs when start button is clicked
+
+    // Initialize game here, runs when Start button is clicked
     public void StartGame()
     {
         ShowMenu(false);
@@ -40,10 +49,12 @@ public class GameManagerScript : MonoBehaviour
         ShowHUD();
 
         // Only toggle ship appearance at start
-        if (!gameRunning) // Specific actions taken at new game
+        if (!isGameRunning) // Specific actions taken at new game
         {
-            gameRunning = true;
 
+            isGameRunning = true;
+            isGameLost = false;
+            isGameWon = false;
 
             be2 = Instantiate(be, new Vector3(0, 0, 4000), Quaternion.identity).GetComponent<BossEncounter>();
             be2.SpawnBoss(0); // The first boss
@@ -63,22 +74,25 @@ public class GameManagerScript : MonoBehaviour
 
         // Start game time
         Time.timeScale = 1;
-        gamePaused = false;
+        isGamePaused = false;
 
         // Enable spawning of new Asteroids
-        AsteroidSpawn.PauseSpawn(gamePaused);
+        AsteroidSpawn.PauseSpawn(isGamePaused);
     }
+
 
     public void AsteroidDestroyed()
     {
         Player.AddHealth(10.0f);
     }
 
+
     public void HandleBossDefeat() // Should be called by boss object after destruction
     {
         if (!bossDead)
         {
             Destroy(be2.gameObject);
+
             // Based on the current game state, determine what to do
             be2 = Instantiate(be, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BossEncounter>();
             be2.SpawnBoss(1); // The first boss
@@ -88,16 +102,61 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    // Stops game and returns to game menu
+
+    // Called when game is won
+    private void WonGame()
+    {
+        isGameWon = true;
+        StopGame();
+
+        // Show "Won" screen
+        EndScreenCanvas.gameObject.SetActive(enabled);
+
+        // Show game menu
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
+        ShowMenuChildren(enabled);
+        MenuCanvas.gameObject.SetActive(enabled);
+        isMenuShown = enabled;
+        Cursor.visible = enabled;
+    }
+
+
+    // Called when game is lost
+    private void LostGame()
+    {
+        isGameLost = true;
+        StopGame();
+
+        // Show "Lost" screen
+        EndScreenCanvas.gameObject.SetActive(enabled);
+
+        // Show game menu
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
+        ShowMenuChildren(enabled);
+        MenuCanvas.gameObject.SetActive(enabled);
+        isMenuShown = enabled;
+        Cursor.visible = enabled;
+    }
+
+
+    // Stops game and resets game params
     public void StopGame()
     {
-        gameRunning = false;
+        isGameRunning = false;
 
-        // Stopping of the game, a.k.a reset
-        // Reset game params
-        // Show start menu
+        AsteroidSpawn.PauseSpawn(true);
         Time.timeScale = 0; // Pause game time
+        
+        Player.Hide(true);
+        isGameRunning = false;
+        isGamePaused = true;
+
+        be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
+        be2.SpawnBoss(0); // The first boss
+
+        wifi.reset(Player.GetCoordinates());
     }
+
 
     // Paused game state, opens menu by default
     public void PauseGame()
@@ -105,18 +164,19 @@ public class GameManagerScript : MonoBehaviour
         // Pause game time
         Time.timeScale = 0;
 
-        gamePaused = true;
+        isGamePaused = true;
         
         ShowHUD(false);
         ShowMenu();
         Player.Hide(true);
 
         // Stop spawning new asteroids while game is paused
-        AsteroidSpawn.PauseSpawn(gamePaused);
+        AsteroidSpawn.PauseSpawn(isGamePaused);
     }
 
-    public bool IsPaused() => gamePaused;
-    public bool IsRunning() => gameRunning;
+
+    public bool IsPaused() => isGamePaused;
+    public bool IsRunning() => isGameRunning;
 
     public void ShowMenuChildren(bool enabled = true)
     {
@@ -127,14 +187,16 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+
     // Enable/disable menu rendering
     public void ShowMenu(bool enabled = true)
     {
-        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gamePaused ? "Continue" : "Start";
+        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = isGamePaused ? "Continue" : "Start";
         MenuCanvas.gameObject.SetActive(enabled);
-        menuShown = enabled;
+        isMenuShown = enabled;
         Cursor.visible = enabled;
     }
+
 
     // Enable/disable HUD rendering
     private void ShowHUD(bool enabled = true)
@@ -142,13 +204,14 @@ public class GameManagerScript : MonoBehaviour
         GameCanvas.gameObject.SetActive(enabled);
     }
 
+
     // Start is called before the first frame update
     void Start()
     {
         // Set to specified resolution
         Screen.SetResolution(x_Res, y_Res, true);
-        gameRunning = false;
-        gamePaused = false;
+        isGameRunning = false;
+        isGamePaused = false;
 
         //Asteroids = new List<GameObject>();
         Player.Hide();
@@ -161,9 +224,9 @@ public class GameManagerScript : MonoBehaviour
     {
         
         // Open/close menu with 'm' key
-        if(gameRunning && Input.GetKeyDown("m"))
+        if(isGameRunning && Input.GetKeyDown("m"))
         {
-            if (menuShown)
+            if (isMenuShown)
                 StartGame();
             else
                 PauseGame();
