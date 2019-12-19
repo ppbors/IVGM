@@ -9,6 +9,7 @@ public class GameManagerScript : MonoBehaviour
 {
     public Canvas MenuCanvas;
     public Canvas GameCanvas;
+    public Canvas EndScreenCanvas;
 
     public PlayerController Player;
     public AsteroidSpawn AsteroidSpawn;
@@ -107,7 +108,8 @@ public class GameManagerScript : MonoBehaviour
         isGameWon = true;
         StopGame();
 
-        // TODO: Show "Won" screen
+        // Show "Won" screen
+        EndScreenCanvas.gameObject.SetActive(enabled);
 
         // Show game menu
         MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
@@ -124,7 +126,8 @@ public class GameManagerScript : MonoBehaviour
         isGameLost = true;
         StopGame();
 
-        // TODO: Show "Lost" screen
+        // Show "Lost" screen
+        EndScreenCanvas.gameObject.SetActive(enabled);
 
         // Show game menu
         MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
