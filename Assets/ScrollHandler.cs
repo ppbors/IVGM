@@ -12,11 +12,20 @@ public class ScrollHandler : MonoBehaviour
     private bool isScrolling; // extra check to not scroll while Start is not called
     private float rotation;   // Default 55deg, but read in from canvas
 
+    bool hasplayed = false;
 
     public void StartScroll()
     {
+        if (hasplayed)
+        {
+            GameManager.StartGame();
+            return;
+        }
+
         GameManager.ShowMenuChildren(false);
+        hasplayed = true;
         Setup();
+        
     }
 
 
@@ -26,6 +35,7 @@ public class ScrollHandler : MonoBehaviour
 
         if (Input.GetKeyDown("z")){
             this.gameObject.SetActive(false);
+            GameManager.ShowMenuChildren(true);
             GameManager.StartGame();
         }
 
@@ -56,6 +66,7 @@ public class ScrollHandler : MonoBehaviour
                 if(x.a <= 0f)
                 {
                     this.gameObject.SetActive(false);
+                    GameManager.ShowMenuChildren(true);
                     GameManager.StartGame();
                 }
                     

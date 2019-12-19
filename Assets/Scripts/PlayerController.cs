@@ -6,12 +6,12 @@ public static class Boundary
 {
     /* Skybox size */
     public const float 
-        xMin = -3000.0f, 
-        xMax = 3000.0f, 
-        yMin = -3000.0f, 
-        yMax = 3000.0f, 
-        zMin = -3000.0f, 
-        zMax = 3000.0f;
+        xMin = -5000.0f, 
+        xMax = 5000.0f, 
+        yMin = -5000.0f, 
+        yMax = 5000.0f, 
+        zMin = -5000.0f, 
+        zMax = 5000.0f;
 }
 
 public class PlayerController : MonoBehaviour

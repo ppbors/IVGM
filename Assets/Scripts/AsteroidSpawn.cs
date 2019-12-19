@@ -10,9 +10,11 @@ public class AsteroidSpawn : MonoBehaviour
 
     private bool spawn;
     private bool pause;
-    private const uint spawnSizeAsteroids = 400;
+    private const uint spawnSizeAsteroids = 300;
     private uint spawnCount = 0;
     private uint spawnRate = 1; // Asteroids spawn per second
+
+    private float partBound = 10.0f;
 
     private void Start()
     {
@@ -52,14 +54,15 @@ public class AsteroidSpawn : MonoBehaviour
         for (int i = 0; i < n; ++i)
         {
             /* Lets just assume no two asteroids get spawned too close to eachother */
-            Vector3 position = new Vector3(Random.Range(Boundary.xMin/10.0f, Boundary.xMax/10.0f),
-                                           Random.Range(Boundary.yMin/10.0f, Boundary.yMax/10.0f),
-                                           Random.Range(Boundary.zMin/10.0f, Boundary.zMax/10.0f));
+            Vector3 position = new Vector3(Random.Range(Boundary.xMin/partBound, Boundary.xMax/partBound),
+                                           Random.Range(Boundary.yMin/partBound, Boundary.yMax/partBound),
+                                           Random.Range(Boundary.zMin/partBound, Boundary.zMax/partBound));
 
-            position += transform.forward * 1000;
+            position += transform.localPosition;
+            position += transform.forward * 100;
             GameObject asteroid = Instantiate(AsteroidPrefabs[Random.Range(0, 3)], position, Quaternion.identity);
             asteroid.transform.SetParent(this.gameObject.transform);
-            asteroid.transform.LookAt(transform.forward * -1000);
+            asteroid.transform.LookAt(player.transform);
             Asteroids.Add(asteroid);
         }
     }

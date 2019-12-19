@@ -237,7 +237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeLaser: 1
   exhaust: {fileID: 0}
-  cannon: {fileID: 5189017794155842076}
+  cannon:
+  - {fileID: 0}
   m_laserPrefab: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
   player: {fileID: 0}
 --- !u!1 &7473587261115385009
@@ -389,6 +390,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 89.99999
       objectReference: {fileID: 0}
+    - target: {fileID: 1605261427573896086, guid: ed4f327f82000084f9fbdf3cf28e89e4,
+        type: 3}
+      propertyPath: color.g
+      value: 0.46427232
+      objectReference: {fileID: 0}
+    - target: {fileID: 1605261427573896086, guid: ed4f327f82000084f9fbdf3cf28e89e4,
+        type: 3}
+      propertyPath: color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1605261427573896086, guid: ed4f327f82000084f9fbdf3cf28e89e4,
+        type: 3}
+      propertyPath: lifeLength
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1605261427573896086, guid: ed4f327f82000084f9fbdf3cf28e89e4,
+        type: 3}
+      propertyPath: color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed4f327f82000084f9fbdf3cf28e89e4, type: 3}
 --- !u!4 &8558615426337180401 stripped
@@ -397,15 +418,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6792572776461547914}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5189017794155842076 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1605261427573896086, guid: ed4f327f82000084f9fbdf3cf28e89e4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6792572776461547914}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ea36ef7a00788340aa4961f12313cec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

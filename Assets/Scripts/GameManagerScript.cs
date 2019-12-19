@@ -42,11 +42,10 @@ public class GameManagerScript : MonoBehaviour
         // Only toggle ship appearance at start
         if (!gameRunning) // Specific actions taken at new game
         {
-            Player.Hide(false);
             gameRunning = true;
 
 
-            be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
+            be2 = Instantiate(be, new Vector3(0, 0, 4000), Quaternion.identity).GetComponent<BossEncounter>();
             be2.SpawnBoss(0); // The first boss
 
             wifi.reset(Player.GetCoordinates());
@@ -59,7 +58,8 @@ public class GameManagerScript : MonoBehaviour
         {
             // Actions taken only when proceeding from paused game
         }
-        
+
+        Player.Hide(false);
 
         // Start game time
         Time.timeScale = 1;
@@ -109,6 +109,7 @@ public class GameManagerScript : MonoBehaviour
         
         ShowHUD(false);
         ShowMenu();
+        Player.Hide(true);
 
         // Stop spawning new asteroids while game is paused
         AsteroidSpawn.PauseSpawn(gamePaused);
@@ -130,7 +131,6 @@ public class GameManagerScript : MonoBehaviour
     public void ShowMenu(bool enabled = true)
     {
         MenuCanvas.GetComponent<MenuControl>().Button1Text.text = gamePaused ? "Continue" : "Start";
-        ShowMenuChildren(enabled);
         MenuCanvas.gameObject.SetActive(enabled);
         menuShown = enabled;
         Cursor.visible = enabled;
@@ -161,7 +161,7 @@ public class GameManagerScript : MonoBehaviour
     {
         
         // Open/close menu with 'm' key
-        if(Input.GetKeyDown("m"))
+        if(gameRunning && Input.GetKeyDown("m"))
         {
             if (menuShown)
                 StartGame();

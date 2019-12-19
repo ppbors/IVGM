@@ -32,11 +32,11 @@ public class AsteroidBehavior : MonoBehaviour
         //rb.angularVelocity = Random.insideUnitSphere * tumble;
 
         if (gameObject.name.Contains("1"))
-            normalVelocity = Random.Range(10, 20) * transform.forward;
+            normalVelocity = Random.Range(10, 80) * transform.forward;
         else if (gameObject.name.Contains("2"))
-            normalVelocity = Random.Range(5, 15) * transform.forward + transform.right * Random.Range(0, 5);
+            normalVelocity = Random.Range(5, 40) * transform.forward + transform.right * Random.Range(0, 10);
         else
-            normalVelocity = 10 * transform.forward + transform.right * -1 * Random.Range(0, 5);
+            normalVelocity = 30 * transform.forward + transform.right * -1 * Random.Range(0, 20);
 
         rb.velocity = normalVelocity;
         rb.sleepThreshold = 1.0f;

@@ -44,7 +44,7 @@ public class WifiAnimation : MonoBehaviour
         float distance = Vector3.Distance(gm.GetCurrentSignalSource(this.gameObject), gm.GetPlayerCoordinates()) / barTreshold;
        
         Debug.Log(Vector3.Distance(gm.GetCurrentSignalSource(this.gameObject), gm.GetPlayerCoordinates()));
-        SetSignalStrength(Mathf.Abs(Mathf.Clamp((int) distance, 0, 4) - 5));
+        SetSignalStrength(Mathf.Abs(Mathf.Clamp((int) distance, 0, 4) - 4));
 
         
     }
