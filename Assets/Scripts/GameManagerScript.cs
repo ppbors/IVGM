@@ -86,6 +86,10 @@ public class GameManagerScript : MonoBehaviour
         Player.AddHealth(10.0f);
     }
 
+    public void HandleEnemyDefeat()
+    {
+        Player.AddHealth(10.0f);
+    }
 
     public void HandleBossDefeat() // Should be called by boss object after destruction
     {
@@ -93,12 +97,17 @@ public class GameManagerScript : MonoBehaviour
         {
             Destroy(be2.gameObject);
 
+            Player.AddHealth(100.0f);
             // Based on the current game state, determine what to do
-            be2 = Instantiate(be, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BossEncounter>();
+            be2 = Instantiate(be, new Vector3(0, 2000, 2000), Quaternion.identity).GetComponent<BossEncounter>();
             be2.SpawnBoss(1); // The first boss
 
             wifi.reset(Player.GetCoordinates());
             bossDead = true;
+        }
+        else
+        {
+            WonGame();
         }
     }
 
@@ -108,33 +117,26 @@ public class GameManagerScript : MonoBehaviour
     {
         isGameWon = true;
         StopGame();
+        ShowHUD(false);
 
-        // Show "Won" screen
+        EndScreenCanvas.GetComponent<MenuControl>().Button1Text.text = "YOU WON! \n Congratulations you have your WIFI back!";
+        // Show "Lost" screen
         EndScreenCanvas.gameObject.SetActive(enabled);
-
-        // Show game menu
-        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
-        ShowMenuChildren(enabled);
-        MenuCanvas.gameObject.SetActive(enabled);
-        isMenuShown = enabled;
         Cursor.visible = enabled;
     }
 
 
     // Called when game is lost
-    private void LostGame()
+    public void LostGame()
     {
         isGameLost = true;
         StopGame();
+        ShowHUD(false);
+        EndScreenCanvas.GetComponent<MenuControl>().Button1Text.text = "YOU LOST!\n Your 4G has run out. \n Life as you know it will cease to exist.";
 
         // Show "Lost" screen
         EndScreenCanvas.gameObject.SetActive(enabled);
 
-        // Show game menu
-        MenuCanvas.GetComponent<MenuControl>().Button1Text.text = "Restart";
-        ShowMenuChildren(enabled);
-        MenuCanvas.gameObject.SetActive(enabled);
-        isMenuShown = enabled;
         Cursor.visible = enabled;
     }
 
@@ -151,8 +153,8 @@ public class GameManagerScript : MonoBehaviour
         isGameRunning = false;
         isGamePaused = true;
 
-        be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
-        be2.SpawnBoss(0); // The first boss
+        //be2 = Instantiate(be, new Vector3(0, 0, 2500), Quaternion.identity).GetComponent<BossEncounter>();
+        //be2.SpawnBoss(0); // The first boss
 
         wifi.reset(Player.GetCoordinates());
     }

@@ -15,7 +15,7 @@ public class CannonBehavior : MonoBehaviour {
         go.transform.localScale = new Vector3(go.transform.localScale.x * size, go.transform.localScale.y * size,
         go.transform.localScale.z * (size/10)) ;
         // Destroys itself after 3 seconds
-        GameObject.Destroy(go, 3f);
+        GameObject.Destroy(go, lifeLength);
     }
 
  

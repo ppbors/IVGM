@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         rb.mass = mass;
         rb.drag = drag;
-        health = 100;
+        health = 200;
         InvokeRepeating("HealthDecreaseAutomatically", 1, 1);
 
     }
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             // Instantiate laser
-            cannons[Random.Range(0, 2)].Fire(1);
+            cannons[Random.Range(0, 2)].Fire(3);
         }
     }
 
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
 
     private void HealthDecreaseAutomatically()
     {
-        AddHealth(-1);
+        AddHealth(-0.5f);
     }
 
     public float getHealth()
@@ -139,11 +139,15 @@ public class PlayerController : MonoBehaviour
         // clamp health between 0 and 100
         health = (health < 0) ? 0 : (health > 100) ? 100 : health;
 
+        if(health == 0)
+        {
+            gm.LostGame();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        AddHealth(-5);
+        AddHealth(-3);
     }
 
 

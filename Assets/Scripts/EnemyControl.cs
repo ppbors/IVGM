@@ -5,6 +5,15 @@ using UnityEngine;
 public class EnemyControl : MonoBehaviour
 {
     public float sizeLaser;
+
+    /* Enemy distance triggers */
+
+    public float maxDist = 1000.0f;
+    public float fireDist = 1000.0f;
+    public bool isBoss;
+
+    /* --- */
+
     private Rigidbody rb;
     public ParticleSystem exhaust;
 
@@ -23,10 +32,7 @@ public class EnemyControl : MonoBehaviour
     private readonly float moveSpeed = 5.0f;
     /* --- */
 
-    /* Enemy distance trigger constants */
-    private readonly float maxDist = 200.0f;
-    private readonly float fireDist = 1000.0f;
-    /* --- */
+
 
     private bool cannonOnCooldown = true;
     private float fireRate = 5.0f; 
@@ -44,7 +50,7 @@ public class EnemyControl : MonoBehaviour
     /* --- */
 
     int health = 100;
-
+    bool fireLeft = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,12 +86,21 @@ public class EnemyControl : MonoBehaviour
             RotateTowardsPlayer();
             MoveForward();
         }
-        else
-        {
-            // Idle state: do nothing?
-        }
+        
         if (health <= 0)
-            gm.HandleBossDefeat();
+        {
+            Debug.Log("DEAD");
+            if (isBoss)
+                gm.HandleBossDefeat();
+            else
+            {
+                gm.HandleEnemyDefeat();
+                Destroy(this.gameObject);
+            }
+                
+        }
+            
+
     }
 
     private void RotateTowardsPlayer()
@@ -123,17 +138,28 @@ public class EnemyControl : MonoBehaviour
         cannonOnCooldown = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    public void DecreaseHealth()
     {
-        Debug.Log("COLLISION");
-        if (collision.gameObject.name.Contains("Laser"))
-            health -= 10;
+        
+        if (isBoss)
+            health -= 100;
+        else
+            health -= 20;
     }
+
     private void Fire()
     {
+        int fireFrom = 0;
         // Instantiate laser, spawn slightly in front
         cannonOnCooldown = true;
-        cannon[Random.Range(0, cannon.Count)].Fire(sizeLaser);
+        if (cannon.Count > 1)
+        {
+            fireFrom = (fireLeft) ? 0 : 1;
+            cannon[fireFrom].gameObject.transform.LookAt(player.transform);
+        }
+        cannon[fireFrom].Fire(sizeLaser);
+        fireLeft = !fireLeft;
         StartCoroutine(CoolDown());
         
     }

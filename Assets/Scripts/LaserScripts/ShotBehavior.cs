@@ -17,7 +17,7 @@ public class ShotBehavior : MonoBehaviour {
 	void Update ()
     {
         // change to change speed of laser
-		transform.position += transform.forward * Time.deltaTime * 100f;
+		transform.position += transform.forward * Time.deltaTime * 150;
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -28,12 +28,15 @@ public class ShotBehavior : MonoBehaviour {
             //GameObject.Destroy(this.gameObject);
     }
 
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.name.Contains("Asteroid"))
             other.gameObject.GetComponent<AsteroidBehavior>().ChangeSize();
+        if (other.gameObject.name.Contains("Enemy") || other.gameObject.name.Contains("Boss"))
+            other.gameObject.GetComponent<EnemyControl>().DecreaseHealth();
         explosion = GameObject.Instantiate(explosion, transform.position, transform.rotation) as ParticleSystem;
-        GameObject.Destroy(this.gameObject);
+        GameObject.Destroy(this.gameObject, 0.2f);
     }
 
 }

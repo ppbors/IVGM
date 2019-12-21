@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
@@ -31,6 +32,13 @@ public class ButtonHandler : MonoBehaviour
 
         // Start showing menu
         gm.ShowMenu();
+    }
+
+    public void RestartClicked()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Application.LoadLevel(Application.loadedLevel);
+
     }
 
     public void ExitClicked() => Application.Quit(); // Ignored in editor
