@@ -42,8 +42,15 @@ public class ShotBehavior1 : MonoBehaviour {
             other.gameObject.GetComponent<AsteroidBehavior>().ChangeSize();
             this.GetComponents<AudioSource>()[1].Play();
         }
-        if (other.gameObject.name.Contains("Enemy") || other.gameObject.name.Contains("Boss"))
+        if (other.gameObject.name.Contains("Enemy"))
+            if (other.gameObject.GetComponent<EnemyControl>()!=null)
             other.gameObject.GetComponent<EnemyControl>().DecreaseHealth();
+        if (other.gameObject.name.Contains("Boss"))
+        {
+            if (other.gameObject.GetComponent<EnemyControl>() != null)
+                other.gameObject.GetComponent<EnemyControl>().DecreaseHealth();
+            this.GetComponents<AudioSource>()[2].Play();//Nuke sound
+        }
         explosion = GameObject.Instantiate(explosion, transform.position, transform.rotation) as ParticleSystem;
         GameObject.Destroy(this.gameObject, 0.2f);
     }

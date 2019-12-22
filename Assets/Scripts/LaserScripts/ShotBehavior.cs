@@ -40,7 +40,8 @@ public class ShotBehavior : MonoBehaviour {
         if (other.gameObject.name.Contains("Asteroid"))
             other.gameObject.GetComponent<AsteroidBehavior>().ChangeSize();
         if (other.gameObject.name.Contains("Enemy") || other.gameObject.name.Contains("Boss"))
-            other.gameObject.GetComponent<EnemyControl>().DecreaseHealth();
+            if (other.gameObject.GetComponent<EnemyControl>()!=null)
+                other.gameObject.GetComponent<EnemyControl>().DecreaseHealth();
         explosion = GameObject.Instantiate(explosion, transform.position, transform.rotation) as ParticleSystem;
         GameObject.Destroy(this.gameObject, 0.2f);
     }

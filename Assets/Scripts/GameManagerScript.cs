@@ -124,6 +124,7 @@ public class GameManagerScript : MonoBehaviour
     {
         if (!bossDead)
         {
+            this.GetComponents<AudioSource>()[1].Play();
             Destroy(be2.gameObject);
 
             Player.AddHealth(100.0f);
