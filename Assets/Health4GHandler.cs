@@ -28,6 +28,11 @@ public class Health4GHandler : MonoBehaviour
             playWarningSnd = true;
             this.GetComponent<AudioSource>().Play();
         }
+        if (x > 8 && playWarningSnd)
+        {
+            playWarningSnd = false;
+            this.GetComponent<AudioSource>().Stop();
+        }
         m_Slider.value = x;
         m_BackGround.color = m_MaxMinHealth.Evaluate(x / 100);
     }
