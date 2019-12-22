@@ -91,7 +91,7 @@ public class GameManagerScript : MonoBehaviour
         switch (tip)
         {
             case 0:
-                text = "Tip: The wifi logo will increase in strenght the closer you are to the boss ->";
+                text = "Tip: The wifi logo will increase in strength the closer you are to the boss >>";
                 break;
             case 1:
                 text = "Tip: Recover 4G by killing Asteroids and Enemies";
