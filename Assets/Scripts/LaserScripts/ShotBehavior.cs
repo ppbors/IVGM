@@ -9,6 +9,14 @@ public class ShotBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+
+        float dist = Mathf.Log(Vector3.Distance(GameObject.Find("Player").transform.position, transform.position));
+        if (dist <= 6f) {
+            this.GetComponent<AudioSource>().volume =
+                Mathf.Min(100, Mathf.Max(0, 6-dist)*40)
+            / 100.0f;
+            this.GetComponent<AudioSource>().Play();
+        }
         var main = explosion.main;
         main.startSize = explosionSize;
     }
