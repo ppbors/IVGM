@@ -9,7 +9,6 @@ public class ShotBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-
         float dist = Mathf.Log(Vector3.Distance(GameObject.Find("Player").transform.position, transform.position));
         if (dist <= 6f) {
             this.GetComponent<AudioSource>().volume =
