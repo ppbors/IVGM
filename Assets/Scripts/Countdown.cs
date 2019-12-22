@@ -11,6 +11,7 @@ public class Countdown : MonoBehaviour
     public TextMeshProUGUI countdown;
     private bool started = false;
     private bool stopped = false;
+    private bool stop = false;
 
     void Start()
     {
@@ -19,8 +20,16 @@ public class Countdown : MonoBehaviour
 
     void Update()
     {
+        if (timeLeft == 0 && !stop)
+        {
+            stop = true;
+            this.transform.position = new Vector3(this.transform.position.x - 100, this.transform.position.y, 0);
+        }
+        if (timeLeft == 0)
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y+5,0);
         if (started)
-            countdown.text = ("" + timeLeft);
+            countdown.text = (timeLeft==0?"Start!":""+timeLeft);
+
         if (timeLeft < 0)
         {
             Destroy(gameObject);
@@ -43,6 +52,9 @@ public class Countdown : MonoBehaviour
     {
         while (true)
         {
+            this.GetComponent<AudioSource>().Play();
+            if (timeLeft==0)
+                this.GetComponents<AudioSource>()[1].Play();
             yield return new WaitForSeconds(1);
             timeLeft--;
         }
