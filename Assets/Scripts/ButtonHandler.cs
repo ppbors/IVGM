@@ -46,14 +46,14 @@ public class ButtonHandler : MonoBehaviour
     public void CreditsClicked()
     {
         // Move Restart button down to make space for credits text
-        GameObject restartButton = GameObject.Find("RestartButton");
-        Vector3 pos = restartButton.transform.position;
-        pos.x -= 100f;
-        restartButton.transform.position = pos;
+        //GameObject restartButton = GameObject.Find("RestartButton");
+        //Vector3 pos = restartButton.transform.position;
+        //pos.y -= 10f;
+        //restartButton.transform.position = pos;
 
         // Show credits
         EndScreenCanvas.GetComponent<MenuControl>().Button1Text.text = "CREDITS\n\nYenebeb\nPhilippe\nMartijn\nRob\nMohammad Ali";
-        EndScreenCanvas.GetComponent<MenuControl>().Button1Text.fontSize = 500f;
+        EndScreenCanvas.GetComponent<MenuControl>().Button1Text.fontSize = 800f;
 
         // Hide Credits button
         GameObject.Find("CreditsButton").SetActive(false);
