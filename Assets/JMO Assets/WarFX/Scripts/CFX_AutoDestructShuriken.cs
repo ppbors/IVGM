@@ -8,7 +8,15 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 	
 	void OnEnable()
 	{
-		StartCoroutine("CheckIfAlive");
+        float dist = Mathf.Log(Vector3.Distance(GameObject.Find("Player").transform.position, transform.position));
+        if (dist <= 6f)
+        {
+            this.GetComponent<AudioSource>().volume =
+                Mathf.Min(100, Mathf.Max(0, 6 - dist) * 40)
+            / 100.0f;
+            this.GetComponent<AudioSource>().Play();
+        }
+        StartCoroutine("CheckIfAlive");
 	}
 	
 	IEnumerator CheckIfAlive ()
