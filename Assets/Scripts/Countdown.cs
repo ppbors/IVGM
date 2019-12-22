@@ -53,6 +53,8 @@ public class Countdown : MonoBehaviour
         while (true)
         {
             this.GetComponent<AudioSource>().Play();
+            if (timeLeft==0)
+                this.GetComponents<AudioSource>()[1].Play();
             yield return new WaitForSeconds(1);
             timeLeft--;
         }
