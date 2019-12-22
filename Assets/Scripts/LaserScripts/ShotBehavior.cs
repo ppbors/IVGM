@@ -31,6 +31,12 @@ public class ShotBehavior : MonoBehaviour {
 
     private void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.name == "Player")
+        {
+            float health = -1 * gameObject.transform.localScale.x * 10;
+            other.gameObject.GetComponent<PlayerController>().AddHealth(health);
+        }
+
         if (other.gameObject.name.Contains("Asteroid"))
             other.gameObject.GetComponent<AsteroidBehavior>().ChangeSize();
         if (other.gameObject.name.Contains("Enemy") || other.gameObject.name.Contains("Boss"))

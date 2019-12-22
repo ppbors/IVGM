@@ -37,7 +37,10 @@ public class AsteroidSpawn : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player && !spawn)
+        {
             spawn = true;
+            player.GetComponent<PlayerController>().GiveTip(2);
+        }
         
     }
 

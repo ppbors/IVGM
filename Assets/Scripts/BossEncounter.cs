@@ -9,6 +9,8 @@ public class BossEncounter : MonoBehaviour
     private BoxCollider bc;
     private EnemyControl boss;
 
+    private bool tipGiven = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,6 +23,15 @@ public class BossEncounter : MonoBehaviour
     {
         if (!boss)
             return;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == gm.GetPlayer() && !tipGiven)
+        {
+            gm.GiveTip(3);
+            tipGiven = true;
+        }
     }
 
     public void SpawnBoss(int i)

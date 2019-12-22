@@ -62,8 +62,8 @@ public class GameManagerScript : MonoBehaviour
             wifi.reset(Player.GetCoordinates());
 
 
-            //GameObject go = Instantiate(EnemyPrefab, (Player.transform.position + new Vector3(0, 0, 50)), Quaternion.identity); /* dummy */
             countdown.startCountdown();
+            GiveTip(0);
         }
         else 
         {
@@ -80,6 +80,35 @@ public class GameManagerScript : MonoBehaviour
         AsteroidSpawn.PauseSpawn(isGamePaused);
     }
 
+    public GameObject GetPlayer()
+    {
+        return Player.gameObject;
+    }
+
+    public void GiveTip(int tip)
+    {
+        string text = "";
+        switch (tip)
+        {
+            case 0:
+                text = "Tip: The wifi logo will increase in strenght the closer you are to the boss ->";
+                break;
+            case 1:
+                text = "Tip: Recover 4G by killing Asteroids and Enemies";
+                break;
+            case 2:
+                text = "Tip: Asteroids are harder then your ship. Avoid them.";
+                break;
+            case 3:
+                text = "Tip: Kill the Boss to recover all your 4G";
+                break;
+            default:
+                break;
+            
+        }
+
+        GameCanvas.GetComponent<FlavourTextControl>().ChangeText(text);
+    }
 
     public void AsteroidDestroyed()
     {
@@ -99,7 +128,7 @@ public class GameManagerScript : MonoBehaviour
 
             Player.AddHealth(100.0f);
             // Based on the current game state, determine what to do
-            be2 = Instantiate(be, new Vector3(0, 2000, 2000), Quaternion.identity).GetComponent<BossEncounter>();
+            be2 = Instantiate(be, new Vector3(0, 2500, 2500), Quaternion.identity).GetComponent<BossEncounter>();
             be2.SpawnBoss(1); // The first boss
 
             wifi.reset(Player.GetCoordinates());
@@ -107,6 +136,7 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
+            Destroy(be2.gameObject);
             WonGame();
         }
     }
@@ -238,8 +268,8 @@ public class GameManagerScript : MonoBehaviour
     public Vector3 GetCurrentSignalSource(GameObject go)
     {
         //GameObject go = GameObject.Find("BossEnvironment");
-
-        if (!go)
+        
+        if (!go || !isGameRunning)
             return new Vector3(0, 0, 0); // Very short boss to boss transition
 
         //BossEncounter be2 = go.GetComponent<BossEncounter>();

@@ -118,6 +118,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void GiveTip(int tip)
+    {
+        gm.GiveTip(tip);
+    }
+
     public Vector3 GetCoordinates()
     {
         return transform.position;
@@ -147,7 +152,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        AddHealth(-3);
+        if(collision.gameObject.name.Contains("Asteroid"))
+            AddHealth(-2);
     }
 
 

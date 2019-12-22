@@ -40,6 +40,7 @@ public class WifiAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         //Debug.Log(gm.GetCurrentSignalSource(this.gameObject));
         float distance = Vector3.Distance(gm.GetCurrentSignalSource(this.gameObject), gm.GetPlayerCoordinates()) / barTreshold;
        

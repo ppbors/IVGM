@@ -6,11 +6,11 @@ public class EnemySpawn : MonoBehaviour
 {
     public GameObject player;
     public GameObject EnemyPrefab;
-    private List<GameObject> Asteroids;
+    public uint spawnSizeEnemies = 10;
 
     private bool spawn;
     private bool pause;
-    private const uint spawnSizeEnemies = 10;
+    
     private uint spawnCount = 0;
     private uint spawnRate = 1; // Enemies spawn per second
 
@@ -19,15 +19,15 @@ public class EnemySpawn : MonoBehaviour
     private void Start()
     {
         spawn = false;
-        Asteroids = new List<GameObject>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collider entered");
         if (other.gameObject == player && !spawn)
+        {
             spawn = true;
-
+            player.GetComponent<PlayerController>().GiveTip(1);
+        }
     }
 
     private void Update()

@@ -29,7 +29,7 @@ public class EnemyControl : MonoBehaviour
     /* Enemy movement constants */
     private readonly float thrust = 1.0f;
     private readonly float rotationSpeed = 1.0f;
-    private readonly float moveSpeed = 5.0f;
+    private readonly float moveSpeed = 10.0f;
     /* --- */
 
 
@@ -51,6 +51,8 @@ public class EnemyControl : MonoBehaviour
 
     int health = 100;
     bool fireLeft = false;
+    float distance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,7 +75,7 @@ public class EnemyControl : MonoBehaviour
         /* Update locations */
         target = player.transform;
         myTransform = this.transform;
-
+        distance = (target.position - myTransform.position).magnitude;
         if (IsPlayerWithinAttackRange())
         {
             RotateTowardsPlayer();
@@ -89,7 +91,6 @@ public class EnemyControl : MonoBehaviour
         
         if (health <= 0)
         {
-            Debug.Log("DEAD");
             if (isBoss)
                 gm.HandleBossDefeat();
             else
@@ -117,18 +118,17 @@ public class EnemyControl : MonoBehaviour
 
     private void MoveForward() // need thrust code here instead of simple addition
     {
-        myTransform.position += myTransform.forward * moveSpeed * Time.deltaTime;
+        //myTransform.position += myTransform.forward * moveSpeed * Time.deltaTime;
+        rb.AddRelativeForce(Vector3.forward * distance/100 * thrust, ForceMode.Impulse);
     }
 
     private bool IsPlayerWithinApproachRange()
-    {
-        var distance = (target.position - myTransform.position).magnitude;
+    { 
         return distance < maxDist;
     }
 
     private bool IsPlayerWithinAttackRange()
     {
-        var distance = (target.position - myTransform.position).magnitude;
         return distance < fireDist;
     }
 
@@ -141,17 +141,16 @@ public class EnemyControl : MonoBehaviour
 
     public void DecreaseHealth()
     {
-        
+        // Increase / Decrease to change difficulty
         if (isBoss)
-            health -= 100;
+            health -= 5;
         else
-            health -= 20;
+            health -= 25;
     }
 
     private void Fire()
     {
         int fireFrom = 0;
-        // Instantiate laser, spawn slightly in front
         cannonOnCooldown = true;
         if (cannon.Count > 1)
         {

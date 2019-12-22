@@ -10,7 +10,6 @@ public class AsteroidBehavior : MonoBehaviour
     private Rigidbody rb;
     private Vector3 angularVelocity;
     private Vector3 normalVelocity;
-    private readonly float scale = 10.0f;
     private float x_Scale, y_Scale, z_Scale;
 
     private void Start()
