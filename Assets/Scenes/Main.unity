@@ -6514,6 +6514,11 @@ PrefabInstance:
       propertyPath: lifeLength
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2597334561873285821, guid: 37e3e77d55cd1134d8607a7ff734baff,
+        type: 3}
+      propertyPath: m_laserPrefab
+      value: 
+      objectReference: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
     - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
         type: 3}
       propertyPath: gm
@@ -6539,6 +6544,11 @@ PrefabInstance:
       propertyPath: lifeLength
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
+        type: 3}
+      propertyPath: m_laserPrefab
+      value: 
+      objectReference: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
     - target: {fileID: 3388398399031491039, guid: 37e3e77d55cd1134d8607a7ff734baff,
         type: 3}
       propertyPath: m_LocalPosition.x

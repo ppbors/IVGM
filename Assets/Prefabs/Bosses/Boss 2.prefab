@@ -241,7 +241,7 @@ MonoBehaviour:
   cannon:
   - {fileID: 7945477532015164192}
   - {fileID: 8179727106258757990}
-  m_laserPrefab: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
+  m_laserPrefab: {fileID: 136330, guid: 82a9dda800c9fbb4899d4a78d5bd4f82, type: 3}
   player: {fileID: 0}
 --- !u!54 &5062652497711217755
 Rigidbody:
@@ -456,6 +456,11 @@ PrefabInstance:
       propertyPath: lifeLength
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1605261427573896086, guid: ed4f327f82000084f9fbdf3cf28e89e4,
+        type: 3}
+      propertyPath: m_laserPrefab
+      value: 
+      objectReference: {fileID: 136330, guid: 82a9dda800c9fbb4899d4a78d5bd4f82, type: 3}
     - target: {fileID: 2919000585333846907, guid: ed4f327f82000084f9fbdf3cf28e89e4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -563,6 +568,11 @@ PrefabInstance:
       propertyPath: lifeLength
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1605261427573896086, guid: ed4f327f82000084f9fbdf3cf28e89e4,
+        type: 3}
+      propertyPath: m_laserPrefab
+      value: 
+      objectReference: {fileID: 136330, guid: 82a9dda800c9fbb4899d4a78d5bd4f82, type: 3}
     - target: {fileID: 2919000585333846907, guid: ed4f327f82000084f9fbdf3cf28e89e4,
         type: 3}
       propertyPath: m_LocalPosition.x

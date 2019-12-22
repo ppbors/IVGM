@@ -4927,7 +4927,7 @@ GameObject:
   - component: {fileID: 2702977146897374166}
   - component: {fileID: 2702977146897374167}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4990,6 +4990,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea38cb5f18905084f9b24e65cb2bc383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sizeLaser: 0
+  maxDist: 1000
+  fireDist: 1000
+  isBoss: 0
   exhaust: {fileID: 0}
-  m_laserPrefab: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
+  cannon: []
+  m_laserPrefab: {fileID: 136330, guid: 0b6e98954d5009b47a1324b67be8dea5, type: 3}
   player: {fileID: 0}
