@@ -97,7 +97,7 @@ public class GameManagerScript : MonoBehaviour
                 text = "Tip: Recover 4G by killing Asteroids and Enemies";
                 break;
             case 2:
-                text = "Tip: Asteroids are harder then your ship. Avoid them.";
+                text = "Tip: Asteroids are harder than your ship. Avoid them.";
                 break;
             case 3:
                 text = "Tip: Kill the Boss to recover all your 4G";
