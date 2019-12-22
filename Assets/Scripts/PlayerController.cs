@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     /* Player movement variables / constants */
     private readonly float thrust = 1.0f; /* default thrust */
     private readonly float controlSpeed = 1.8f;
+    private bool thrusterEnabled = false;
 
     private float yaw = 0.0f;    /* left/right yaw */
     private float pitch = 0.0f;  /* up/down pitch */
@@ -75,7 +76,19 @@ public class PlayerController : MonoBehaviour
                                        pitch,           /* Up / Down */
                                        moveVertical);   /* Forward / backward */
 
-        ThrusterIntensify(moveVertical > 0);
+        if (!thrusterEnabled && moveVertical > 0)
+        {
+            thrusterEnabled = true;
+            this.GetComponent<AudioSource>().Play();
+        }
+        if (thrusterEnabled && moveVertical == 0)
+        {
+            thrusterEnabled = false;
+            if (this.GetComponent<AudioSource>().isPlaying)
+                this.GetComponent<AudioSource>().Stop();
+        }
+        ThrusterIntensify(thrusterEnabled);
+        
 
         /* Relative force (with respect to player rotation) */
         rb.AddRelativeForce(Vector3.forward * moveVertical * thrust, ForceMode.Impulse);
