@@ -52,7 +52,7 @@ public class ButtonHandler : MonoBehaviour
         //restartButton.transform.position = pos;
 
         // Show credits
-        EndScreenCanvas.GetComponent<MenuControl>().Button1Text.text = "CREDITS\n\nYenebeb\nPhilippe\nMartijn\nRob\nMohammad Ali";
+        EndScreenCanvas.GetComponent<MenuControl>().Button1Text.text = "CREDITS\n\nYenebeb\nPhilippe\nMartijn\nRob\nMohammad Ali\n\n\"Fanfare for Space\" - Kevin MacLeod (Creative Commons)";
         EndScreenCanvas.GetComponent<MenuControl>().Button1Text.fontSize = 800f;
 
         // Hide Credits button
