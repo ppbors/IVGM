@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
+    public Canvas EndScreenCanvas;
+
     private GameManagerScript gm;
 
     // Start is called before the first frame update
@@ -39,6 +41,19 @@ public class ButtonHandler : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         //Application.LoadLevel(Application.loadedLevel);
 
+    }
+
+    public void CreditsClicked()
+    {
+        // Move Restart button down to make space for credits text
+        GameObject restartButton = GameObject.Find("RestartButton");
+        Vector3 pos = restartButton.transform.position;
+        pos.y -= 200f;
+        restartButton.transform.position = pos;
+
+        // Show credits
+        EndScreenCanvas.GetComponent<MenuControl>().Button1Text.text = "CREDITS\nYenebeb\nPhilippe\nMartijn\nRob\nMohammad Ali";
+        //GameObject.Find("RestartButton").SetActive(false);
     }
 
     public void ExitClicked() => Application.Quit(); // Ignored in editor
