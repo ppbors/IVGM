@@ -6489,66 +6489,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1827717890490551244, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2597334561873285821, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: gm
-      value: 
-      objectReference: {fileID: 1877723836}
-    - target: {fileID: 2597334561873285821, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2597334561873285821, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: color.b
-      value: 0.078431375
-      objectReference: {fileID: 0}
-    - target: {fileID: 2597334561873285821, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: lifeLength
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2597334561873285821, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: m_laserPrefab
-      value: 
-      objectReference: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
-    - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: gm
-      value: 
-      objectReference: {fileID: 1877723836}
-    - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: color.b
-      value: 0.076129675
-      objectReference: {fileID: 0}
-    - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: lifeLength
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7463812906635296409, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: m_laserPrefab
-      value: 
-      objectReference: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
     - target: {fileID: 3388398399031491039, guid: 37e3e77d55cd1134d8607a7ff734baff,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6603,21 +6543,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6367449288330979115, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: gm
-      value: 
-      objectReference: {fileID: 1877723836}
-    - target: {fileID: 4281371828152015810, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: gm
-      value: 
-      objectReference: {fileID: 1877723836}
-    - target: {fileID: 3337736290832445375, guid: 37e3e77d55cd1134d8607a7ff734baff,
-        type: 3}
-      propertyPath: m_AngularDrag
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37e3e77d55cd1134d8607a7ff734baff, type: 3}
